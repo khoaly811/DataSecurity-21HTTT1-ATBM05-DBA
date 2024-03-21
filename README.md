@@ -1,2 +1,2 @@
-# Data-Security-in-IS---21HTTT1---ATBM05
-QUẢN LÝ KHOA CÔNG NGHỆ THÔNG TIN 
+# DataSecurity-in-IS-21HTTT1-ATBM05
+Faculty of Information Technology Management System 
