@@ -1,2 +1,2 @@
-lib/
+lib/*
 .vscode/launch.json
