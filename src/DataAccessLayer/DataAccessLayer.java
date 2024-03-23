@@ -7,13 +7,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import oracle.jdbc.OracleDriver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import dto.Nhansu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -25,8 +27,8 @@ public class DataAccessLayer {
 
     private DataAccessLayer() throws SQLException {
         // Initialize the database connection
-        DriverManager.registerDriver(new OracleDriver());
-        conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "QLK", "Rack12345678");
+        DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+        conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/ATBM2024", "C##QLK", "Rack12345678");
     }
 
     public static DataAccessLayer getInstance() throws SQLException {
@@ -48,4 +50,25 @@ public class DataAccessLayer {
         return conn;
     }
     
+    public static Nhansu getNHANSU(String MANV) throws SQLException{
+        Connection con = DataAccessLayer.getInstance().connect();
+        PreparedStatement pst = con.prepareStatement(String.format("SELECT HOTEN, PHAI, NGSINH, PHUCAP, DT, VAITRO FROM C##QLK.NHANSU WHERE MANV='%s'", MANV));
+        
+        Nhansu nsu = new Nhansu();
+        nsu.setMANV(MANV);
+        rs = pst.executeQuery();
+        if(rs.next()){
+            nsu.setHOTEN(rs.getString("HOTEN"));
+            nsu.setPHAI(rs.getString("PHAI"));
+            java.sql.Date sqlDate = rs.getDate("NGSINH");
+            LocalDate localDate = sqlDate.toLocalDate();
+            nsu.setNGSINH(localDate);
+            nsu.setPHUCAP(rs.getInt("PHUCAP"));
+            nsu.setDT(rs.getString("DT"));
+            nsu.setVAITRO(rs.getString("VAITRO"));
+        }
+        
+        
+        return nsu;
+    }
 }
