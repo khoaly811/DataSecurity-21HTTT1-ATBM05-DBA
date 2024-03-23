@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="atbm_05.AppController">
+      fx:controller="atbm_05.LoginController">
     <padding>
         <Insets bottom="20" left="20" right="20" top="20"/>
     </padding>
