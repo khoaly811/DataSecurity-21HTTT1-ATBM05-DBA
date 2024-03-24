@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import dto.User;
+import dto.Role;
 import DataAccessLayer.DataAccessLayer;
 
 import java.sql.Connection;
@@ -35,6 +36,30 @@ public class DashboardController {
 
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
+
+    @FXML
+    private TableView<Role> roleTableView;
+
+    @FXML
+    private TableColumn<Role, String> roleColumn;
+
+    @FXML
+    private TableColumn<Role, String> ownerColumn;
+
+    @FXML
+    private TableColumn<Role, String> tableNameColumn;
+
+    @FXML
+    private TableColumn<Role, String> columnNameColumn;
+
+    @FXML
+    private TableColumn<Role, String> privilegeColumn;
+
+    @FXML
+    private TableColumn<Role, String> grantableColumn;
+
+    private ObservableList<Role> roleList = FXCollections.observableArrayList();
+
     @FXML
     public void initialize() {
         // Initialize table columns
@@ -44,8 +69,16 @@ public class DashboardController {
         lastLoginColumn.setCellValueFactory(cellData -> cellData.getValue().LAST_LOGINproperty().asString());
         grantedRoleColumn.setCellValueFactory(cellData -> cellData.getValue().GRANTED_ROLEproperty());
 
-        // Load users from database
+        roleColumn.setCellValueFactory(cellData -> cellData.getValue().ROLEproperty());
+        ownerColumn.setCellValueFactory(cellData -> cellData.getValue().OWNERproperty());
+        tableNameColumn.setCellValueFactory(cellData -> cellData.getValue().TABLE_NAMEproperty());
+        columnNameColumn.setCellValueFactory(cellData -> cellData.getValue().COLUMN_NAMEproperty());
+        privilegeColumn.setCellValueFactory(cellData -> cellData.getValue().PRIVILEGEproperty());
+        grantableColumn.setCellValueFactory(cellData -> cellData.getValue().GRANTABLEproperty());
+
+        // Load from database
         loadUsersFromDatabase();
+        loadRolesFromDatabase();
     }
 
     private void loadUsersFromDatabase() {
@@ -82,20 +115,49 @@ public class DashboardController {
             }
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load users from the database.");
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (pst != null) pst.close();
-                if (conn != null) conn.close();
-                if (dal != null) dal.disconnect();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        } 
 
         // Set the loaded users to the table view
         userTableView.setItems(userList);
     }
+
+    private void loadRolesFromDatabase() {
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            pst = conn.prepareStatement("select* from role_tab_privs where role = 'GV' or role = 'NVCB' or role = 'GVU' or role = 'TDV' or role = 'TKHOA' or role = 'SV' ");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                Role role = new Role();
+                role.setROLE(rs.getString("ROLE"));
+                role.setOWNER((rs.getString("OWNER")));
+                role.setTABLE_NAME((rs.getString("TABLE_NAME")));
+                role.setCOLUMN_NAME((rs.getString("COLUMN_NAME")));
+                role.setPRIVILEGE((rs.getString("PRIVILEGE")));
+                role.setGRANTABLE(rs.getString("GRANTABLE"));
+                // if (rs.getDate("PASSWORD_CHANGE_DATE") == null){
+                //     user.setPASSWORD_CHANGE_DATE(null);
+                // }
+                // else{
+                //     user.setPASSWORD_CHANGE_DATE(rs.getDate("PASSWORD_CHANGE_DATE").toLocalDate());
+                // }
+                
+                roleList.add(role);
+            }
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load roles from the database.");
+            System.out.println(e.getMessage());
+        } 
+
+        // Set the loaded users to the table view
+        roleTableView.setItems(roleList);
+    }
+
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
