@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ListUserController {
+public class DashboardController {
     @FXML
     private TableView<User> userTableView;
 

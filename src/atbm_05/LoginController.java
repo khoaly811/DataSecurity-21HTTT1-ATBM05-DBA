@@ -61,7 +61,7 @@ public class LoginController {
                     throw new SecurityException();
                 }
 
-                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ListUser.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Dashboard.fxml"));
                 Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
                 Scene scene1 = new Scene(fxmlLoader.load());
                 stage.setScene(scene1);
