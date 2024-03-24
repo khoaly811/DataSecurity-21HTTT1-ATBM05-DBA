@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -15,8 +16,11 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Text layoutX="28.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search user" />
-                  <TableView fx:id="userTableView" layoutX="2.0" layoutY="129.0" prefHeight="563.0" prefWidth="549.0" style="-fx-border-color: cyan;">
+                  <Text layoutX="28.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User">
+                     <font>
+                        <Font size="22.0" />
+                     </font></Text>
+                  <TableView fx:id="userTableView" layoutX="2.0" layoutY="221.0" prefHeight="471.0" prefWidth="549.0" style="-fx-border-color: cyan;">
                     <columns>
                       <TableColumn fx:id="usernameColumn" prefWidth="97.0" text="Username" />
                       <TableColumn fx:id="accountStatusColumn" prefWidth="125.0" text="Account Status" />
@@ -40,7 +44,11 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TextField layoutX="28.0" layoutY="44.0" prefHeight="25.0" prefWidth="334.0" promptText="Keywords..." />
+                  <TextField layoutX="28.0" layoutY="44.0" prefHeight="25.0" prefWidth="334.0" promptText="Search User" />
+                  <Label fx:id="userUsernameUpdateLabel" disable="true" layoutX="28.0" layoutY="129.0" text="Username" visible="false" />
+                  <Label fx:id="userPasswordUpdateTextField" disable="true" layoutX="28.0" layoutY="165.0" text="Password" visible="false" />
+                  <TextField fx:id="userUsernameUpdateTextField" disable="true" layoutX="115.0" layoutY="125.0" visible="false" />
+                  <TextField fx:id="userPasswordUpdateTextField" disable="true" layoutX="115.0" layoutY="161.0" visible="false" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -55,23 +63,28 @@
                         <TableColumn fx:id="grantableColumn" minWidth="0.0" prefWidth="99.0" text="Grantable" />
                      </columns>
                   </TableView>
-                  <Button layoutX="14.0" layoutY="85.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="ADD">
+                  <Button layoutX="31.0" layoutY="85.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="ADD">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button layoutX="121.0" layoutY="85.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="UPDATE">
+                  <Button layoutX="139.0" layoutY="85.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="UPDATE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button layoutX="230.0" layoutY="85.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="118.0" style="-fx-background-color: red;" text="DELETE" textFill="WHITE">
+                  <Button layoutX="247.0" layoutY="85.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="118.0" style="-fx-background-color: red;" text="DELETE" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TextField layoutX="14.0" layoutY="47.0" prefHeight="25.0" prefWidth="334.0" promptText="Keywords..." />
-                  <Text layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search role" />
+                  <TextField layoutX="31.0" layoutY="47.0" prefHeight="25.0" prefWidth="334.0" promptText="Search Role" />
+                  <Text layoutX="29.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role">
+                     <font>
+                        <Font size="23.0" />
+                     </font></Text>
+                  <Label disable="true" layoutX="32.0" layoutY="131.0" text="Role" visible="false" />
+                  <TextField disable="true" layoutX="116.0" layoutY="128.0" visible="false" />
                </children>
             </AnchorPane>
         </items>
