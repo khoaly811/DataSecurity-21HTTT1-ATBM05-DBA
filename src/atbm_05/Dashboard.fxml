@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -29,7 +30,7 @@
                       <TableColumn fx:id="grantedRoleColumn" minWidth="0.0" prefWidth="149.0" text="Granted Role" />
                     </columns>
                   </TableView>
-                  <Button layoutX="28.0" layoutY="79.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="ADD">
+                  <Button layoutX="28.0" layoutY="79.0" mnemonicParsing="false" onAction="#onAddUserButtonClick" prefHeight="33.0" prefWidth="77.0" text="ADD">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -46,9 +47,10 @@
                   </Button>
                   <TextField layoutX="28.0" layoutY="44.0" prefHeight="25.0" prefWidth="334.0" promptText="Search User" />
                   <Label fx:id="userUsernameUpdateLabel" disable="true" layoutX="28.0" layoutY="129.0" text="Username" visible="false" />
-                  <Label fx:id="userPasswordUpdateTextField" disable="true" layoutX="28.0" layoutY="165.0" text="Password" visible="false" />
+                  <Label fx:id="userPasswordUpdateLabel" disable="true" layoutX="28.0" layoutY="165.0" text="Password" visible="false" />
                   <TextField fx:id="userUsernameUpdateTextField" disable="true" layoutX="115.0" layoutY="125.0" visible="false" />
-                  <TextField fx:id="userPasswordUpdateTextField" disable="true" layoutX="115.0" layoutY="161.0" visible="false" />
+                  <PasswordField fx:id="userPasswordUpdateTextField" disable="true" layoutX="115.0" layoutY="161.0" visible="false" />
+                  <Button fx:id="addOK" disable="true" layoutX="276.0" layoutY="125.0" mnemonicParsing="false" onAction="#onAddOKUserButtonClick" text="OK" visible="false" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

@@ -2,7 +2,9 @@ package atbm_05;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -49,7 +51,9 @@ public class DashboardController {
     private TextField userUsernameUpdateTextField;
 
     @FXML
-    private TextField userPasswordUpdateTextField;
+    private PasswordField userPasswordUpdateTextField;
+    @FXML
+    private Button addOK;
 
 
     @FXML
@@ -66,16 +70,55 @@ public class DashboardController {
     }
 
     @FXML
-    private void onUpdateButtonClick(ActionEvent event) {
+    private void onAddUserButtonClick(ActionEvent event) {
         userUsernameUpdateLabel.setVisible(true);
         userPasswordUpdateLabel.setVisible(true);
         userUsernameUpdateTextField.setVisible(true);
         userPasswordUpdateTextField.setVisible(true);
+        addOK.setVisible(true);
 
         userUsernameUpdateLabel.setDisable(false);
         userPasswordUpdateLabel.setDisable(false);
         userUsernameUpdateTextField.setDisable(false);
         userPasswordUpdateTextField.setDisable(false);
+        addOK.setDisable(false);
+    }
+
+    @FXML
+    private void onAddOKUserButtonClick(ActionEvent event) {
+        // Retrieve the values from the input fields
+        String username = userUsernameUpdateTextField.getText().trim();
+        String password = userPasswordUpdateTextField.getText().trim();
+    
+        // Validate the input fields
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please enter both username and password.");
+            return;
+        }
+    
+        // Insert the new user into the database
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        PreparedStatement pst = null;
+    
+        try {
+            dal = DataAccessLayer.getInstance("", "");
+            conn = dal.connect();
+            pst = conn.prepareStatement(String.format("CREATE USER %s IDENTIFIED BY %s", username, password));
+            ///pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY Rack123456");
+            System.out.println("nhan beo 1");
+            pst.execute();
+            System.out.println("nhan beo 2");
+            showAlert(Alert.AlertType.INFORMATION, "Success", "User added successfully.");
+            // Clear the input fields after successful insertion
+            userUsernameUpdateTextField.clear();
+            userPasswordUpdateTextField.clear();
+            // Refresh the TableView to reflect the changes
+            loadUsersFromDatabase();
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+            System.out.println(e.getMessage());
+        } 
     }
 
     private void loadUsersFromDatabase() {
@@ -113,14 +156,7 @@ public class DashboardController {
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load users from the database.");
         } finally {
-            try {
-                if (rs != null) rs.close();
-                if (pst != null) pst.close();
-                if (conn != null) conn.close();
-                if (dal != null) dal.disconnect();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            
         }
 
         // Set the loaded users to the table view
