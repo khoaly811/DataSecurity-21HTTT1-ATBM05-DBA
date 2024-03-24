@@ -8,18 +8,17 @@ public class User {
     private final SimpleStringProperty ACCOUNT_STATUS = new SimpleStringProperty();
     private final SimpleObjectProperty<LocalDate> CREATED = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<LocalDate> LAST_LOGIN = new SimpleObjectProperty<>();
-    private final SimpleObjectProperty<LocalDate> PASSWORD_CHANGE_DATE = new SimpleObjectProperty<>();
-
+    private final SimpleStringProperty GRANTED_ROLE = new SimpleStringProperty();
     public User(){
 
     }
 
-    public User(String USERNAME, String ACCOUNT_STATUS, LocalDate CREATED,  LocalDate LAST_LOGIN, LocalDate PASSWORD_CHANGE_DATE){
+    public User(String USERNAME, String ACCOUNT_STATUS, LocalDate CREATED,  LocalDate LAST_LOGIN, String GRANTED_ROLE){
         this.USERNAME.set(USERNAME);
         this.ACCOUNT_STATUS.set(ACCOUNT_STATUS);
         this.CREATED.set(CREATED);
         this.LAST_LOGIN.set(LAST_LOGIN);
-        this.PASSWORD_CHANGE_DATE.set(PASSWORD_CHANGE_DATE);
+        this.GRANTED_ROLE.set(GRANTED_ROLE);
     }
     public String getUSERNAME(){
         return USERNAME.get();
@@ -60,13 +59,13 @@ public class User {
     public SimpleObjectProperty<LocalDate> LAST_LOGINproperty(){
         return LAST_LOGIN;
     }
-    public LocalDate getPASSWORD_CHANGE_DATE(){
-        return PASSWORD_CHANGE_DATE.get();
+    public String getGRANTED_ROLE(){
+        return GRANTED_ROLE.get();
     }
-    public void setPASSWORD_CHANGE_DATE(LocalDate PASSWORD_CHANGE_DATE){
-        this.PASSWORD_CHANGE_DATE.set(PASSWORD_CHANGE_DATE);
+    public void setGRANTED_ROLE(String GRANTED_ROLE){
+        this.GRANTED_ROLE.set(GRANTED_ROLE);
     }
-    public SimpleObjectProperty<LocalDate> PASSWORD_CHANGE_DATEproperty(){
-        return PASSWORD_CHANGE_DATE;
+    public SimpleStringProperty GRANTED_ROLEproperty(){
+        return GRANTED_ROLE;
     }
 }
