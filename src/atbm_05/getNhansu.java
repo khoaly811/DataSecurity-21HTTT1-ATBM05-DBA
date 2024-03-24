@@ -1,7 +1,6 @@
 package atbm_05;
 
 import DataAccessLayer.DataAccessLayer;
-import static DataAccessLayer.DataAccessLayer.getNHANSU;
 import dto.Nhansu;
 import java.io.IOException;
 import java.sql.Connection;
