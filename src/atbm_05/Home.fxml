@@ -40,12 +40,11 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="224.0" text="List of Users">
+      <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="224.0" text="List of Privileges">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
-      <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="224.0" text="List of Roles" />
-      <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="224.0" text="Grant/Revoke privilege" />
+      <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="224.0" text="Grant/Revoke privilege" />
    </children>
 </VBox>
