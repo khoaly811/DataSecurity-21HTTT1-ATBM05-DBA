@@ -42,6 +42,19 @@ public class DashboardController {
     @FXML
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
+    @FXML
+    private Label userUsernameUpdateLabel;
+
+    @FXML
+    private Label userPasswordUpdateLabel;
+
+    @FXML
+    private TextField userUsernameUpdateTextField;
+
+    @FXML
+    private PasswordField userPasswordUpdateTextField;
+    @FXML
+    private Button addOK;
 
     @FXML
     private TableView<Role> roleTableView;
@@ -66,20 +79,6 @@ public class DashboardController {
 
     private ObservableList<Role> roleList = FXCollections.observableArrayList();
 
-    @FXML
-    private Label userUsernameUpdateLabel;
-
-    @FXML
-    private Label userPasswordUpdateLabel;
-
-    @FXML
-    private TextField userUsernameUpdateTextField;
-
-    @FXML
-    private PasswordField userPasswordUpdateTextField;
-    @FXML
-    private Button addOK;
-
 
     @FXML
     public void initialize() {
@@ -89,7 +88,6 @@ public class DashboardController {
         createdColumn.setCellValueFactory(cellData -> cellData.getValue().CREATEDproperty().asString());
         lastLoginColumn.setCellValueFactory(cellData -> cellData.getValue().LAST_LOGINproperty().asString());
         grantedRoleColumn.setCellValueFactory(cellData -> cellData.getValue().GRANTED_ROLEproperty());
-
         roleColumn.setCellValueFactory(cellData -> cellData.getValue().ROLEproperty());
         ownerColumn.setCellValueFactory(cellData -> cellData.getValue().OWNERproperty());
         tableNameColumn.setCellValueFactory(cellData -> cellData.getValue().TABLE_NAMEproperty());
@@ -97,9 +95,10 @@ public class DashboardController {
         privilegeColumn.setCellValueFactory(cellData -> cellData.getValue().PRIVILEGEproperty());
         grantableColumn.setCellValueFactory(cellData -> cellData.getValue().GRANTABLEproperty());
 
-        // Load from database
-        loadUsersFromDatabase();
         loadRolesFromDatabase();
+        // Load users from database
+        loadUsersFromDatabase();
+        
     }
 
     @FXML
@@ -188,7 +187,6 @@ public class DashboardController {
             }
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load users from the database.");
-        } 
         } finally {
             
         }
@@ -196,7 +194,6 @@ public class DashboardController {
         // Set the loaded users to the table view
         userTableView.setItems(userList);
     }
-
     private void loadRolesFromDatabase() {
         DataAccessLayer dal = null;
         Connection conn = null;
@@ -233,7 +230,6 @@ public class DashboardController {
         // Set the loaded users to the table view
         roleTableView.setItems(roleList);
     }
-
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
