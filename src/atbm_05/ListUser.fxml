@@ -9,16 +9,16 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="1125.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="1125.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="atbm_05.ListUserController">
    <children>
-      <TableView layoutX="365.0" layoutY="103.0" prefHeight="591.0" prefWidth="760.0">
+      <TableView fx:id="userTableView" layoutX="365.0" layoutY="103.0" prefHeight="591.0" prefWidth="760.0">
         <columns>
-          <TableColumn text="Username" /> 
-          <TableColumn prefWidth="70.0" text="C2" />
-            <TableColumn prefWidth="75.0" text="C2" />
-            <TableColumn prefWidth="75.0" text="C2" />
-            <TableColumn prefWidth="91.0" text="C2" />
-            <TableColumn prefWidth="205.0" text="C2" />
+          <TableColumn text="Username" fx:id="usernameColumn" />
+          <TableColumn text="Account Status" fx:id="accountStatusColumn" />
+          <TableColumn text="Created" fx:id="createdColumn" />
+          <TableColumn text="Last Login" fx:id="lastLoginColumn" />
+          <TableColumn text="Password Change Date" fx:id="passwordChangeDateColumn" />
         </columns>
       </TableView>
       <TextField layoutX="610.0" layoutY="41.0" prefHeight="33.0" prefWidth="411.0" promptText="Keywords..." />

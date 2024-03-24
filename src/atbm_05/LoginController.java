@@ -65,6 +65,7 @@ public class LoginController {
                 Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
                 Scene scene1 = new Scene(fxmlLoader.load());
                 stage.setScene(scene1);
+                stage.centerOnScreen();
                 stage.show();
                 
             } catch (SecurityException e) {
