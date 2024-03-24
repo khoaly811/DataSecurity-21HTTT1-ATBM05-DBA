@@ -11,46 +11,69 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="1125.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm_05.ListUserController">
    <children>
-      <TableView fx:id="userTableView" layoutX="365.0" layoutY="103.0" prefHeight="591.0" prefWidth="760.0">
-        <columns>
-          <TableColumn fx:id="usernameColumn" prefWidth="148.0" text="Username" />
-          <TableColumn fx:id="accountStatusColumn" prefWidth="111.0" text="Account Status" />
-          <TableColumn fx:id="createdColumn" minWidth="7.0" prefWidth="142.0" text="Created" />
-          <TableColumn fx:id="lastLoginColumn" minWidth="5.0" prefWidth="140.0" text="Last Login" />
-          <TableColumn fx:id="passwordChangeDateColumn" minWidth="0.0" prefWidth="218.0" text="Password Change Date" />
-        </columns>
-      </TableView>
-      <TextField layoutX="610.0" layoutY="41.0" prefHeight="33.0" prefWidth="411.0" promptText="Keywords..." />
-      <Text layoutX="554.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Text>
-      <AnchorPane layoutX="-6.0" layoutY="-17.0" prefHeight="711.0" prefWidth="352.0" style="-fx-background-color: gray;">
-         <children>
-            <TextField layoutX="29.0" layoutY="155.0" prefHeight="43.0" prefWidth="273.0" promptText="UserName..." />
-            <TextField layoutX="29.0" layoutY="220.0" prefHeight="43.0" prefWidth="273.0" promptText="Password" />
-            <Button layoutX="117.0" layoutY="430.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="118.0" text="ADD">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button layoutX="117.0" layoutY="489.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="118.0" text="UPDATE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button layoutX="117.0" layoutY="545.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="118.0" style="-fx-background-color: red;" text="DELETE" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button layoutX="14.0" layoutY="35.0" mnemonicParsing="false" style="-fx-background-color: white;" text="Back">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
+      <SplitPane dividerPositions="0.5" layoutX="509.0" layoutY="8.0" prefHeight="694.0" prefWidth="1125.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Text layoutX="28.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search user" />
+                  <TableView fx:id="userTableView" layoutX="2.0" layoutY="129.0" prefHeight="563.0" prefWidth="549.0" style="-fx-border-color: cyan;">
+                    <columns>
+                      <TableColumn fx:id="usernameColumn" prefWidth="97.0" text="Username" />
+                      <TableColumn fx:id="accountStatusColumn" prefWidth="125.0" text="Account Status" />
+                      <TableColumn fx:id="createdColumn" minWidth="7.0" prefWidth="77.0" text="Created" />
+                      <TableColumn fx:id="lastLoginColumn" minWidth="5.0" prefWidth="109.0" text="Last Login" />
+                      <TableColumn fx:id="grantedRoleColumn" minWidth="0.0" prefWidth="149.0" text="Granted Role" />
+                    </columns>
+                  </TableView>
+                  <Button layoutX="28.0" layoutY="79.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="ADD">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="136.0" layoutY="79.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="UPDATE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="243.0" layoutY="79.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="118.0" style="-fx-background-color: red;" text="DELETE" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="28.0" layoutY="44.0" prefHeight="25.0" prefWidth="334.0" promptText="Keywords..." />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TableView fx:id="userTableView1" layoutX="9.0" layoutY="129.0" prefHeight="563.0" prefWidth="543.0" style="-fx-border-color: green;">
+                     <columns>
+                        <TableColumn fx:id="usernameColumn1" prefWidth="97.0" text="Username" />
+                        <TableColumn fx:id="accountStatusColumn1" prefWidth="125.0" text="Account Status" />
+                        <TableColumn fx:id="createdColumn1" minWidth="7.0" prefWidth="77.0" text="Created" />
+                        <TableColumn fx:id="lastLoginColumn1" minWidth="5.0" prefWidth="109.0" text="Last Login" />
+                        <TableColumn fx:id="passwordChangeDateColumn1" minWidth="0.0" prefWidth="140.0" text="Granted Role" />
+                     </columns>
+                  </TableView>
+                  <Button layoutX="14.0" layoutY="85.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="ADD">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="121.0" layoutY="85.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="UPDATE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="230.0" layoutY="85.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="118.0" style="-fx-background-color: red;" text="DELETE" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="14.0" layoutY="47.0" prefHeight="25.0" prefWidth="334.0" promptText="Keywords..." />
+                  <Text layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search role" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </AnchorPane>
