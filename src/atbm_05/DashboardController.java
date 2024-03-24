@@ -2,8 +2,10 @@ package atbm_05;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import dto.User;
 import DataAccessLayer.DataAccessLayer;
 
@@ -13,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 
 public class DashboardController {
     @FXML
@@ -33,7 +36,21 @@ public class DashboardController {
     @FXML
     private TableColumn<User, String> grantedRoleColumn;
 
+    @FXML
     private ObservableList<User> userList = FXCollections.observableArrayList();
+
+    @FXML
+    private Label userUsernameUpdateLabel;
+
+    @FXML
+    private Label userPasswordUpdateLabel;
+
+    @FXML
+    private TextField userUsernameUpdateTextField;
+
+    @FXML
+    private TextField userPasswordUpdateTextField;
+
 
     @FXML
     public void initialize() {
@@ -46,6 +63,19 @@ public class DashboardController {
 
         // Load users from database
         loadUsersFromDatabase();
+    }
+
+    @FXML
+    private void onUpdateButtonClick(ActionEvent event) {
+        userUsernameUpdateLabel.setVisible(true);
+        userPasswordUpdateLabel.setVisible(true);
+        userUsernameUpdateTextField.setVisible(true);
+        userPasswordUpdateTextField.setVisible(true);
+
+        userUsernameUpdateLabel.setDisable(false);
+        userPasswordUpdateLabel.setDisable(false);
+        userUsernameUpdateTextField.setDisable(false);
+        userPasswordUpdateTextField.setDisable(false);
     }
 
     private void loadUsersFromDatabase() {
