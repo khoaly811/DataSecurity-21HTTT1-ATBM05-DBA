@@ -1,14 +1,18 @@
 package atbm_05;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.event.ActionEvent;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +28,7 @@ public class LoginController {
 
 
     @FXML
-    private void loginButtonAction(ActionEvent event) throws SQLException {
+    private void loginButtonAction(ActionEvent event) throws SQLException, IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -37,12 +41,12 @@ public class LoginController {
         try {
             dal = DataAccessLayer.getInstance(username, password);
             conn = dal.connect();
-            dal.disconnect();
             flag = true;
         } catch (SQLException e) {
             popUp = Alert.AlertType.ERROR;
             title = "Login failed";
             msg = "Invalid username or password!";
+            showAlert(popUp, title, msg);
         } 
         if (flag) {
             dal = DataAccessLayer.getInstance(username, password);
@@ -56,16 +60,22 @@ public class LoginController {
                 if (!rs.next()) {
                     throw new SecurityException();
                 }
+
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ListUser.fxml"));
+                Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+                Scene scene1 = new Scene(fxmlLoader.load());
+                stage.setScene(scene1);
+                stage.show();
                 
             } catch (SecurityException e) {
                 popUp = Alert.AlertType.INFORMATION;
                 title = "Login failed";
                 msg = "You are not system admin";
-                dal.disconnect();
+                ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                showAlert(popUp, title, msg);
             } 
-            ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+           
         }
-        showAlert(popUp, title, msg);
     } 
 
     private void showAlert(Alert.AlertType alertType, String title, String message) throws SQLException {
