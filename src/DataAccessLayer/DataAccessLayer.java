@@ -1,6 +1,7 @@
 package DataAccessLayer;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 //import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +11,13 @@ import java.sql.SQLException;
 public class DataAccessLayer {
     private static volatile DataAccessLayer instance;
     private static Connection conn;
+    private static Driver driver;
     //private static ResultSet rs;
 
     private DataAccessLayer(String username, String password) throws SQLException {
         // Initialize the database connection
-        DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+        driver = new oracle.jdbc.OracleDriver();
+        DriverManager.registerDriver(driver);
         conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/ATBM2024", username, password);
     }
 
@@ -35,6 +38,10 @@ public class DataAccessLayer {
     public Connection connect() {
         // Get the database connection
         return conn;
+    }
+
+    public void disconnect() throws SQLException {
+        DriverManager.deregisterDriver(driver);
     }
 
     // public static Nhansu getNHANSU(String MANV) throws SQLException{
