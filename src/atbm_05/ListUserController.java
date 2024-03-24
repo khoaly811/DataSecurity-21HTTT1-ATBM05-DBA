@@ -57,17 +57,26 @@ public class ListUserController {
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            pst = conn.prepareStatement("SELECT * FROM your_table_name");
+            pst = conn.prepareStatement("SELECT * FROM DBA_USERS");
             rs = pst.executeQuery();
-
             while (rs.next()) {
-                User user = new User(
-                        rs.getString("USERNAME"),
-                        rs.getString("ACCOUNT_STATUS"),
-                        rs.getDate("CREATED").toLocalDate(),
-                        rs.getDate("LAST_LOGIN").toLocalDate(),
-                        rs.getDate("PASSWORD_CHANGE_DATE").toLocalDate()
-                );
+                User user = new User();
+                user.setUSERNAME(rs.getString("USERNAME"));
+                user.setACCOUNT_STATUS((rs.getString("ACCOUNT_STATUS")));
+                user.setCREATED(rs.getDate("CREATED").toLocalDate());
+                if (rs.getDate("LAST_LOGIN") == null){
+                    user.setLAST_LOGIN(null);
+                }
+                else{
+                    user.setLAST_LOGIN(rs.getDate("LAST_LOGIN").toLocalDate());
+                }
+                if (rs.getDate("PASSWORD_CHANGE_DATE") == null){
+                    user.setPASSWORD_CHANGE_DATE(null);
+                }
+                else{
+                    user.setPASSWORD_CHANGE_DATE(rs.getDate("PASSWORD_CHANGE_DATE").toLocalDate());
+                }
+                
                 userList.add(user);
             }
         } catch (SQLException e) {

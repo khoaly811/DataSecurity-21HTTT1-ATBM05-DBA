@@ -30,7 +30,7 @@ public class DataAccessLayer {
                 if (result == null) {
                     instance = result = new DataAccessLayer(username, password);
                 }
-            }
+            } 
         }
         return result;
     }

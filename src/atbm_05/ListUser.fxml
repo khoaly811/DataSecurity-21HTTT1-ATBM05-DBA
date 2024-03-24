@@ -13,7 +13,7 @@
    <children>
       <TableView layoutX="365.0" layoutY="103.0" prefHeight="591.0" prefWidth="760.0">
         <columns>
-          <TableColumn text="Username" />
+          <TableColumn text="Username" /> 
           <TableColumn prefWidth="70.0" text="C2" />
             <TableColumn prefWidth="75.0" text="C2" />
             <TableColumn prefWidth="75.0" text="C2" />
