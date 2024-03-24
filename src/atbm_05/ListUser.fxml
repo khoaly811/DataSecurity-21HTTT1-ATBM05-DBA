@@ -18,7 +18,7 @@ fx:controller="atbm_05.ListUserController">
           <TableColumn text="Account Status" fx:id="accountStatusColumn" />
           <TableColumn text="Created" fx:id="createdColumn" />
           <TableColumn text="Last Login" fx:id="lastLoginColumn" />
-          <TableColumn text="Password Change Date" fx:id="passwordChangeDateColumn" />
+          <TableColumn text="Granted Role" fx:id="grantedRoleColumn" />
         </columns>
       </TableView>
       <TextField layoutX="610.0" layoutY="41.0" prefHeight="33.0" prefWidth="411.0" promptText="Keywords..." />

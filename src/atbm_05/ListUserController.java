@@ -31,7 +31,7 @@ public class ListUserController {
     private TableColumn<User, String> lastLoginColumn;
 
     @FXML
-    private TableColumn<User, String> passwordChangeDateColumn;
+    private TableColumn<User, String> grantedRoleColumn;
 
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
@@ -42,7 +42,7 @@ public class ListUserController {
         accountStatusColumn.setCellValueFactory(cellData -> cellData.getValue().ACCOUNT_STATUSproperty());
         createdColumn.setCellValueFactory(cellData -> cellData.getValue().CREATEDproperty().asString());
         lastLoginColumn.setCellValueFactory(cellData -> cellData.getValue().LAST_LOGINproperty().asString());
-        passwordChangeDateColumn.setCellValueFactory(cellData -> cellData.getValue().PASSWORD_CHANGE_DATEproperty().asString());
+        grantedRoleColumn.setCellValueFactory(cellData -> cellData.getValue().GRANTED_ROLEproperty());
 
         // Load users from database
         loadUsersFromDatabase();
@@ -57,7 +57,7 @@ public class ListUserController {
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            pst = conn.prepareStatement("SELECT * FROM DBA_USERS");
+            pst = conn.prepareStatement("select * from dba_users join dba_role_privs on dba_users.username = dba_role_privs.grantee where (username like 'NV%' or username like 'SV%')");
             rs = pst.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -70,12 +70,13 @@ public class ListUserController {
                 else{
                     user.setLAST_LOGIN(rs.getDate("LAST_LOGIN").toLocalDate());
                 }
-                if (rs.getDate("PASSWORD_CHANGE_DATE") == null){
-                    user.setPASSWORD_CHANGE_DATE(null);
-                }
-                else{
-                    user.setPASSWORD_CHANGE_DATE(rs.getDate("PASSWORD_CHANGE_DATE").toLocalDate());
-                }
+                user.setGRANTED_ROLE(rs.getString("GRANTED_ROLE"));
+                // if (rs.getDate("PASSWORD_CHANGE_DATE") == null){
+                //     user.setPASSWORD_CHANGE_DATE(null);
+                // }
+                // else{
+                //     user.setPASSWORD_CHANGE_DATE(rs.getDate("PASSWORD_CHANGE_DATE").toLocalDate());
+                // }
                 
                 userList.add(user);
             }
