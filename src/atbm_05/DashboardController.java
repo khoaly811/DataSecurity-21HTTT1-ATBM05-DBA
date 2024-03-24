@@ -12,6 +12,7 @@ import dto.User;
 import dto.Role;
 import DataAccessLayer.DataAccessLayer;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,6 +80,12 @@ public class DashboardController {
 
     private ObservableList<Role> roleList = FXCollections.observableArrayList();
 
+    @FXML
+    private TextField updateUsernameTextField;
+
+    @FXML
+    private PasswordField updatePasswordTextField;
+
 
     @FXML
     public void initialize() {
@@ -131,15 +138,20 @@ public class DashboardController {
         // Insert the new user into the database
         DataAccessLayer dal = null;
         Connection conn = null;
-        PreparedStatement pst = null;
+        CallableStatement cst = null;
     
         try {
             dal = DataAccessLayer.getInstance("", "");
             conn = dal.connect();
-            pst = conn.prepareStatement(String.format("CREATE USER %s IDENTIFIED BY %s", username, password));
-            ///pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY Rack123456");
+            // pst = conn.prepareStatement(String.format("CREATE USER %s IDENTIFIED BY %s", username, password));
+            cst = conn.prepareCall("{CALL SP_CREATE_USER(?, ?)}");
+        // Set parameters for the stored procedure
+            cst.setString(1, username);
+            cst.setString(2, password);
+        // Execute the stored procedure
             System.out.println("nhan beo 1");
-            pst.execute();
+            cst.execute();
+            ///pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY Rack123456");
             System.out.println("nhan beo 2");
             showAlert(Alert.AlertType.INFORMATION, "Success", "User added successfully.");
             // Clear the input fields after successful insertion
@@ -151,6 +163,46 @@ public class DashboardController {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
             System.out.println(e.getMessage());
         } 
+    }
+    @FXML
+    private void onUpdatePasswordButtonClick(ActionEvent event) {
+        String username = updateUsernameTextField.getText().trim();
+        String newPassword = updatePasswordTextField.getText().trim();
+
+        if (username.isEmpty() || newPassword.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please enter both username and new password.");
+            return;
+        }
+
+        // Call the method to update user password
+        updateUserPassword(username, newPassword);
+    }
+    private void updateUserPassword(String username, String newPassword) {
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+    
+        try {
+            dal = DataAccessLayer.getInstance("", "");
+            conn = dal.connect();
+            cst = conn.prepareCall("{CALL SP_CHANGE_PASS_USER(?, ?)}");
+            cst.setString(1, username);
+            cst.setString(2, newPassword);
+            System.out.println("nhan beo 1");
+            cst.execute();
+            System.out.println("nhan beo 2");
+            showAlert(Alert.AlertType.INFORMATION, "Success", "User password updated successfully.");
+    
+            // Clear the input fields after successful update
+            updateUsernameTextField.clear();
+            updatePasswordTextField.clear();
+    
+            // Refresh the TableView to reflect the changes
+            loadUsersFromDatabase();
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to update user password: " + e.getMessage());
+            System.out.println(e.getMessage());
+        }
     }
 
     private void loadUsersFromDatabase() {
