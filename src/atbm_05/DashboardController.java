@@ -159,6 +159,7 @@ public class DashboardController {
 
     @FXML
     private void onAddUserButtonClick(ActionEvent event) {
+        if (!userUsernameUpdateLabel.isVisible()) {
         userUsernameUpdateLabel.setVisible(true);
         userPasswordUpdateLabel.setVisible(true);
         userUsernameUpdateTextField.setVisible(true);
@@ -170,6 +171,20 @@ public class DashboardController {
         userUsernameUpdateTextField.setDisable(false);
         userPasswordUpdateTextField.setDisable(false);
         addOK.setDisable(false);
+        }else{
+
+        userUsernameUpdateLabel.setVisible(false);
+        userPasswordUpdateLabel.setVisible(false);
+        userUsernameUpdateTextField.setVisible(false);
+        userPasswordUpdateTextField.setVisible(false);
+        addOK.setVisible(false);
+
+        userUsernameUpdateLabel.setDisable(true);
+        userPasswordUpdateLabel.setDisable(true);
+        userUsernameUpdateTextField.setDisable(true);
+        userPasswordUpdateTextField.setDisable(true);
+        addOK.setDisable(true);
+        }
     }
 
     @FXML
@@ -344,6 +359,7 @@ public class DashboardController {
                     showAlert(Alert.AlertType.INFORMATION, "Success", "User deleted successfully.");
                     loadUsersFromDatabase();
                     userTableView.refresh();
+                    reloadWindow(); // force reload
                 } catch (SQLException e) {
                     showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete user: " + e.getMessage());
                     System.out.println(e.getMessage());
@@ -435,6 +451,7 @@ public class DashboardController {
                     showAlert(Alert.AlertType.INFORMATION, "Success", "Role deleted successfully.");
                     loadRolesFromDatabase();
                     roleTableView.refresh();
+                    reloadWindow(); // force reload
                 } catch (SQLException e) {
                     showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete role: " + e.getMessage());
                     System.out.println(e.getMessage());
@@ -635,6 +652,26 @@ public class DashboardController {
 
         // Set the loaded users to the table view
         roleTableView.setItems(roleList);
+    }
+
+    private void reloadWindow() {
+        // Get the current stage (window)
+        Stage stage = (Stage) roleTableView.getScene().getWindow();
+
+        // Close the window
+        stage.close();
+
+        // Reopen the window
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
