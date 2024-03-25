@@ -117,6 +117,18 @@ public class DashboardController {
     private Label ADDroleText;
 
     @FXML
+    private Label UpdateUserPassText;
+
+    @FXML
+    private Label UpdateUserPassUserName;
+
+    @FXML
+    private Label UpdateUserPassPass;
+
+    @FXML
+    private Button UpdateUserPassBtnExe;
+
+    @FXML
     public void initialize() {
         // Initialize table columns
         usernameColumn.setCellValueFactory(cellData -> cellData.getValue().USERNAMEproperty());
@@ -262,6 +274,41 @@ public class DashboardController {
             ADDRoleField.setDisable(true);
             ADDRoleBtn.setDisable(true);
             ADDroleText.setDisable(true);
+        }
+    }
+
+    @FXML
+    private void onUpdateUserButtonClick(ActionEvent event) {
+        if (!UpdateUserPassPass.isVisible()) {
+            // If all elements are currently not visible, make them visible
+            UpdateUserPassText.setVisible(true);
+            UpdateUserPassUserName.setVisible(true);
+            UpdateUserPassPass.setVisible(true);
+            updateUsernameTextField.setVisible(true);
+            updatePasswordTextField.setVisible(true);
+            UpdateUserPassBtnExe.setVisible(true);
+            System.out.println("GGGG"); // Print when elements become visible
+            UpdateUserPassText.setDisable(false);
+            UpdateUserPassUserName.setDisable(false);
+            UpdateUserPassPass.setDisable(false);
+            updateUsernameTextField.setDisable(false);
+            updatePasswordTextField.setDisable(false);
+            UpdateUserPassBtnExe.setDisable(false);
+        } else {
+            // If any one of the elements is currently visible, make them all invisible
+            UpdateUserPassText.setVisible(false);
+            UpdateUserPassUserName.setVisible(false);
+            UpdateUserPassPass.setVisible(false);
+            updateUsernameTextField.setVisible(false);
+            updatePasswordTextField.setVisible(false);
+            UpdateUserPassBtnExe.setVisible(false);
+            System.out.println("GGGG"); // Print when elements become invisible
+            UpdateUserPassText.setDisable(true);
+            UpdateUserPassUserName.setDisable(true);
+            UpdateUserPassPass.setDisable(true);
+            updateUsernameTextField.setDisable(true);
+            updatePasswordTextField.setDisable(true);
+            UpdateUserPassBtnExe.setDisable(true);
         }
     }
 
@@ -496,4 +543,5 @@ public class DashboardController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }

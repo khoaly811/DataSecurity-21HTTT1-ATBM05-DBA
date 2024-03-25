@@ -35,12 +35,12 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button layoutX="136.0" layoutY="79.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="UPDATE">
+                  <Button layoutX="136.0" layoutY="79.0" mnemonicParsing="false" onAction="#onUpdateUserButtonClick" prefHeight="33.0" prefWidth="77.0" text="UPDATE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button layoutX="243.0" layoutY="79.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="118.0" style="-fx-background-color: red;" text="DELETE" textFill="WHITE">
+                  <Button fx:id="deleteUserWantToBtn" layoutX="243.0" layoutY="79.0" mnemonicParsing="false" onAction="#onDeleteButtonClickRowUser" prefHeight="33.0" prefWidth="118.0" style="-fx-background-color: red;" text="DELETE" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -51,12 +51,12 @@
                   <TextField fx:id="userUsernameUpdateTextField" disable="true" layoutX="115.0" layoutY="125.0" visible="false" />
                   <PasswordField fx:id="userPasswordUpdateTextField" disable="true" layoutX="115.0" layoutY="161.0" visible="false" />
                   <Button fx:id="addOK" disable="true" layoutX="276.0" layoutY="125.0" mnemonicParsing="false" onAction="#onAddOKUserButtonClick" text="OK" visible="false" />
-                  <Label layoutX="28.0" layoutY="201.0" text="Update User Password" />
-                  <Label layoutX="28.0" layoutY="232.0" text="Username" />
-                  <Label layoutX="28.0" layoutY="268.0" text="New Password" />
-                  <TextField fx:id="updateUsernameTextField" layoutX="115.0" layoutY="228.0" />
-                  <PasswordField fx:id="updatePasswordTextField" layoutX="115.0" layoutY="264.0" />
-                  <Button layoutX="276.0" layoutY="231.0" mnemonicParsing="false" onAction="#onUpdatePasswordButtonClick" text="Update" />
+                  <Label fx:id="UpdateUserPassText" layoutX="243.0" layoutY="121.0" text="Update User Password" visible="false" />
+                  <Label fx:id="UpdateUserPassUserName" layoutX="243.0" layoutY="152.0" text="Username" visible="false" />
+                  <Label fx:id="UpdateUserPassPass" layoutX="243.0" layoutY="188.0" text="New Password" visible="false" />
+                  <TextField fx:id="updateUsernameTextField" layoutX="330.0" layoutY="148.0" visible="false" />
+                  <PasswordField fx:id="updatePasswordTextField" layoutX="330.0" layoutY="184.0" visible="false" />
+                  <Button fx:id="UpdateUserPassBtnExe" layoutX="491.0" layoutY="151.0" mnemonicParsing="false" onAction="#onUpdatePasswordButtonClick" text="Update" visible="false" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -76,12 +76,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button layoutX="139.0" layoutY="85.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="UPDATE">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="DELETERoleWantToBTN" layoutX="247.0" layoutY="85.0" mnemonicParsing="false" onAction="#onDeleteButtonClickRowRole" prefHeight="33.0" prefWidth="118.0" style="-fx-background-color: red;" text="DELETE" textFill="WHITE">
+                  <Button fx:id="DELETERoleWantToBTN" layoutX="139.0" layoutY="85.0" mnemonicParsing="false" onAction="#onDeleteButtonClickRowRole" prefHeight="33.0" prefWidth="118.0" style="-fx-background-color: red;" text="DELETE" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
