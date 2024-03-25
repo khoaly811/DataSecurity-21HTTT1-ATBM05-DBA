@@ -173,7 +173,7 @@
                      </items>
                   </MenuButton>
                   <TextField fx:id="TableNamePrivField2" layoutX="349.0" layoutY="141.0" promptText="Table Name" visible="false"/>
-                  <Button fx:id="ButtonAOKgrnantPriv1" layoutX="506.0" layoutY="150.0" mnemonicParsing="false" onAction="#ButtonAOKgrnantPrivOnClick" text="OK" visible="false"/>
+                  <Button fx:id="ButtonAOKgrnantPriv1" layoutX="506.0" layoutY="150.0" mnemonicParsing="false" onAction="#ButtonAOKgrnantPrivOnClick1" text="OK" visible="false"/>
                   <MenuButton fx:id="WithGrantOptUser1" layoutX="257.0" layoutY="173.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Option" visible="false">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPrivBoo1" text="Yes" />

@@ -1205,9 +1205,9 @@ public class DashboardController {
 
     @FXML
     private void ButtonAOKgrnantPrivOnClick1(ActionEvent event) {
-        String tableName = TableNamePrivField1.getText().trim();
+        String tableName = TableNamePrivField2.getText().trim();
         String columnName = TableNamePrivField11.getText().trim();
-
+        System.out.println(columnName);
         // Validate the input fields
         if (tableName.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error", "Please enter table name :<");
