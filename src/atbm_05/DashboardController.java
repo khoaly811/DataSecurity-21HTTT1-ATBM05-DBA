@@ -516,7 +516,7 @@ public class DashboardController {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
 
-            pst = conn.prepareStatement("select * from dba_users where (username like 'NV%' or username like 'SV%') and username LIKE ?");
+            pst = conn.prepareStatement("SELECT * FROM dba_users  join dba_role_privs on dba_users.username = dba_role_privs.grantee WHERE (username LIKE 'NV%' OR USERNAME LIKE 'SV%') AND USERNAME LIKE ?");
     
             // Set the search parameter
             pst.setString(1, "%" + searchText + "%");
