@@ -170,6 +170,12 @@ public class DashboardController {
     private SplitMenuButton PrivSelectRevokeRole;
 
     @FXML
+    private TextField GrantPrivtoUserField;
+
+    @FXML
+    private Label ToText;
+
+    @FXML
     public void initialize() {
         // Initialize table columns
         usernameColumn.setCellValueFactory(cellData -> cellData.getValue().USERNAMEproperty());
@@ -194,7 +200,6 @@ public class DashboardController {
         loadRolesFromDatabase();
         // Load users from database
         loadUsersFromDatabase();
-        
 
     }
 
@@ -717,20 +722,29 @@ public class DashboardController {
             GrantTextLabel.setVisible(true);
             GrantRoleBTNOK.setVisible(true);
             GrantRoleTextField.setVisible(true);
+            GrantPrivtoUserField.setVisible(true);
+            ToText.setVisible(true);
 
             GrantTextLabel.setDisable(false);
             GrantRoleBTNOK.setDisable(false);
             GrantRoleTextField.setDisable(false);
+            GrantPrivtoUserField.setDisable(false);
+            ToText.setDisable(false);
 
         } else {
 
             GrantTextLabel.setVisible(false);
             GrantRoleBTNOK.setVisible(false);
             GrantRoleTextField.setVisible(false);
+            GrantPrivtoUserField.setVisible(false);
+            ToText.setVisible(false);
 
             GrantTextLabel.setDisable(true);
             GrantRoleBTNOK.setDisable(true);
             GrantRoleTextField.setDisable(true);
+            GrantPrivtoUserField.setDisable(true);
+            ToText.setDisable(true);
+
         }
     }
 
@@ -749,47 +763,49 @@ public class DashboardController {
             return;
         }
 
-        User selectedUser = userTableView.getSelectionModel().getSelectedItem();
+        String userName = GrantPrivtoUserField.getText().trim();
 
-        if (selectedUser != null) {
-            String userName = selectedUser.getUSERNAME();
-
-            System.out.println("User Name to add Role to: " + userName);
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText(null);
-            alert.setContentText("Are you sure you want to add role " + rolename + " to user " + userName + " ?");
-
-            // Insert the new user into the database
-            DataAccessLayer dal = null;
-            Connection conn = null;
-            CallableStatement cst = null;
-
-            try {
-                dal = DataAccessLayer.getInstance("", "");
-                conn = dal.connect();
-
-                cst = conn.prepareCall("{CALL SP_GRANT_ROLE_USER(?,?)}");
-                // Set parameters for the stored procedure
-                cst.setString(1, userName);
-                cst.setString(2, rolename);
-                // Execute the stored procedure
-                System.out.println("nhan beo 1 ROLE");
-                cst.execute();
-                /// pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY
-                /// Rack123456");
-                System.out.println("nhan beo 2 ROLE");
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Role added to user successfully.");
-                // Clear the input fields after successful insertion
-                ADDRoleField.clear();
-                // Refresh the TableView to reflect the changes
-                loadRolesFromDatabase();
-            } catch (SQLException e) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to add role: " + e.getMessage());
-                System.out.println(e.getMessage());
-            }
+        if (rolename.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please enter role name :<");
+            return;
         }
+
+        System.out.println("User Name to add Role to: " + userName);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to add role " + rolename + " to user " + userName + " ?");
+
+        // Insert the new user into the database
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+
+        try {
+            dal = DataAccessLayer.getInstance("", "");
+            conn = dal.connect();
+
+            cst = conn.prepareCall("{CALL SP_GRANT_ROLE_USER(?,?)}");
+            // Set parameters for the stored procedure
+            cst.setString(1, userName);
+            cst.setString(2, rolename);
+            // Execute the stored procedure
+            System.out.println("nhan beo 1 ROLE");
+            cst.execute();
+            /// pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY
+            /// Rack123456");
+            System.out.println("nhan beo 2 ROLE");
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Role added to user successfully.");
+            // Clear the input fields after successful insertion
+            ADDRoleField.clear();
+            // Refresh the TableView to reflect the changes
+            loadRolesFromDatabase();
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to add role: " + e.getMessage());
+            System.out.println(e.getMessage());
+        }
+
     }
 
     @FXML
@@ -814,6 +830,7 @@ public class DashboardController {
             RevoketableOK.setDisable(true);
         }
     }
+
     @FXML
     public void menuItemClicked(ActionEvent event) {
         MenuItem menuItem = (MenuItem) event.getSource();
@@ -834,10 +851,9 @@ public class DashboardController {
         User selectedUser = userTableView.getSelectionModel().getSelectedItem();
         String selectedPrivilege = PrivSelectRevoke.getText();
         System.out.println(selectedPrivilege);
-        if(selectedPrivilege == "Privilege")
-        {
+        if (selectedPrivilege == "Privilege") {
             showAlert(Alert.AlertType.ERROR, "Error", "Please choose privilege type");
-            return; 
+            return;
         }
         // Check if a row is selected
         if (selectedUser != null) {
@@ -879,6 +895,7 @@ public class DashboardController {
             }
         }
     }
+
     @FXML
     public void menuItemClickedRole(ActionEvent event) {
         MenuItem menuItem = (MenuItem) event.getSource();
@@ -908,7 +925,7 @@ public class DashboardController {
             RevoketableOKRole.setDisable(true);
         }
     }
-    
+
     @FXML
     private void RevoketableOKOnClickRole(ActionEvent event) {
         String tableName = RevoketableFieldRole.getText().trim();
@@ -922,10 +939,9 @@ public class DashboardController {
         Role selectedRole = roleTableView.getSelectionModel().getSelectedItem();
         String selectedPrivilege = PrivSelectRevokeRole.getText();
         System.out.println(selectedPrivilege);
-        if(selectedPrivilege == "Privilege")
-        {
+        if (selectedPrivilege == "Privilege") {
             showAlert(Alert.AlertType.ERROR, "Error", "Please choose privilege type");
-            return; 
+            return;
         }
         // Check if a row is selected
         if (selectedRole != null) {
