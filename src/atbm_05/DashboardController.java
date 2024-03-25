@@ -9,6 +9,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.SplitMenuButton;
@@ -174,6 +175,38 @@ public class DashboardController {
 
     @FXML
     private Label ToText;
+
+    @FXML
+    private MenuButton SelectPrivGrant;
+
+    @FXML
+    private TextField TableNamePrivField;
+
+    @FXML
+    private Button ButtonAOKgrnantPriv;
+
+    @FXML
+    private MenuButton WithGrantOptUser;
+
+    @FXML
+    private TextField TableNamePrivField1;
+
+    @FXML
+    private MenuButton SelectPrivGrant1;
+    
+    @FXML
+    private TextField TableNamePrivField2;
+
+    @FXML
+    private TextField TableNamePrivField11;
+
+    @FXML
+    private MenuButton WithGrantOptUser1;
+
+    @FXML
+    private TextField RoleName;
+    @FXML
+    private Button ButtonAOKgrnantPriv1;
 
     @FXML
     public void initialize() {
@@ -750,6 +783,34 @@ public class DashboardController {
 
     @FXML
     private void GrantPrivBtnOnClick(ActionEvent event) {
+        if (!SelectPrivGrant.isVisible()) {
+            SelectPrivGrant.setVisible(true);
+            TableNamePrivField.setVisible(true);
+            ButtonAOKgrnantPriv.setVisible(true);
+            TableNamePrivField1.setVisible(true);
+            WithGrantOptUser.setVisible(true);
+
+            SelectPrivGrant.setDisable(false);
+            TableNamePrivField.setDisable(false);
+            ButtonAOKgrnantPriv.setDisable(false);
+            TableNamePrivField1.setDisable(false);
+            WithGrantOptUser.setDisable(false);
+
+        } else {
+
+            SelectPrivGrant.setVisible(false);
+            TableNamePrivField.setVisible(false);
+            ButtonAOKgrnantPriv.setVisible(false);
+            TableNamePrivField1.setVisible(false);
+            WithGrantOptUser.setVisible(false);
+
+            SelectPrivGrant.setDisable(true);
+            TableNamePrivField.setDisable(true);
+            ButtonAOKgrnantPriv.setDisable(true);
+            TableNamePrivField1.setDisable(true);
+            WithGrantOptUser.setDisable(true);
+
+        }
 
     }
 
@@ -809,26 +870,36 @@ public class DashboardController {
     }
 
     @FXML
-    private void revokePrivfromRoleBTNOnclick(ActionEvent event) {
-        if (!PrivSelectRevoke.isVisible()) {
-            PrivSelectRevoke.setVisible(true);
-            RevoketableField.setVisible(true);
-            RevoketableOK.setVisible(true);
+    private void GrantPrivBtnOnClick1(ActionEvent event) {
+        if (!SelectPrivGrant1.isVisible()) {
+            SelectPrivGrant1.setVisible(true);
+            TableNamePrivField2.setVisible(true);
+            ButtonAOKgrnantPriv1.setVisible(true);
+            TableNamePrivField11.setVisible(true);
+            WithGrantOptUser1.setVisible(true);
 
-            PrivSelectRevoke.setDisable(false);
-            RevoketableField.setDisable(false);
-            RevoketableOK.setDisable(false);
+            SelectPrivGrant1.setDisable(false);
+            TableNamePrivField2.setDisable(false);
+            ButtonAOKgrnantPriv1.setDisable(false);
+            TableNamePrivField11.setDisable(false);
+            WithGrantOptUser1.setDisable(false);
 
         } else {
 
-            PrivSelectRevoke.setVisible(false);
-            RevoketableField.setVisible(false);
-            RevoketableOK.setVisible(false);
+            SelectPrivGrant1.setVisible(false);
+            TableNamePrivField2.setVisible(false);
+            ButtonAOKgrnantPriv1.setVisible(false);
+            TableNamePrivField11.setVisible(false);
+            WithGrantOptUser1.setVisible(false);
 
-            PrivSelectRevoke.setDisable(true);
-            RevoketableField.setDisable(true);
-            RevoketableOK.setDisable(true);
+            SelectPrivGrant1.setDisable(true);
+            TableNamePrivField2.setDisable(true);
+            ButtonAOKgrnantPriv1.setDisable(true);
+            TableNamePrivField11.setDisable(true);
+            WithGrantOptUser1.setDisable(true);
+
         }
+
     }
 
     @FXML
@@ -884,7 +955,7 @@ public class DashboardController {
                 /// pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY
                 /// Rack123456");
                 System.out.println("nhan beo 2 ROLE");
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Role revoked successfully.");
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Priv revoked from user successfully.");
                 // Clear the input fields after successful insertion
                 ADDRoleField.clear();
                 // Refresh the TableView to reflect the changes
@@ -923,6 +994,28 @@ public class DashboardController {
             PrivSelectRevokeRole.setDisable(true);
             RevoketableFieldRole.setDisable(true);
             RevoketableOKRole.setDisable(true);
+        }
+    }
+    @FXML
+    private void revokePrivfromRoleBTNOnclick(ActionEvent event) {
+        if (!PrivSelectRevoke.isVisible()) {
+            PrivSelectRevoke.setVisible(true);
+            RevoketableField.setVisible(true);
+            RevoketableOK.setVisible(true);
+
+            PrivSelectRevoke.setDisable(false);
+            RevoketableField.setDisable(false);
+            RevoketableOK.setDisable(false);
+
+        } else {
+
+            PrivSelectRevoke.setVisible(false);
+            RevoketableField.setVisible(false);
+            RevoketableOK.setVisible(false);
+
+            PrivSelectRevoke.setDisable(true);
+            RevoketableField.setDisable(true);
+            RevoketableOK.setDisable(true);
         }
     }
 
@@ -971,13 +1064,236 @@ public class DashboardController {
                 /// pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY
                 /// Rack123456");
                 System.out.println("nhan beo 2 ROLE");
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Role revoked successfully.");
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Priv ole revoked from role successfully.");
                 // Clear the input fields after successful insertion
                 ADDRoleField.clear();
                 // Refresh the TableView to reflect the changes
                 loadRolesFromDatabase();
             } catch (SQLException e) {
                 showAlert(Alert.AlertType.ERROR, "Error", "Failed to revoke privilege: " + e.getMessage());
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    public void menuItemClickedGrantPrivBoo(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String selectedPrivilege = menuItem.getText();
+        WithGrantOptUser.setText(selectedPrivilege);
+    }
+
+    @FXML
+    public void menuItemClickedGrantPriv(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String selectedPrivilege = menuItem.getText();
+        SelectPrivGrant.setText(selectedPrivilege);
+    }
+
+    @FXML
+    private void ButtonAOKgrnantPrivOnClick(ActionEvent event) {
+        String tableName = TableNamePrivField.getText().trim();
+        String columnName = TableNamePrivField1.getText().trim();
+
+        // Validate the input fields
+        if (tableName.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please enter table name :<");
+            return;
+        }
+        String userName = RoleName.getText().trim();
+        User selectedUser = userTableView.getSelectionModel().getSelectedItem();
+        String selectedPrivilege = SelectPrivGrant.getText();
+        String GrantOption = WithGrantOptUser.getText();
+        System.out.println(selectedPrivilege);
+        if (selectedPrivilege == "Privilege") {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please choose privilege type");
+            return;
+        }
+        // Check if a row is selected
+    
+            // Retrieve data from the first column of the selected row
+           
+
+            // Insert the new user into the database
+            DataAccessLayer dal = null;
+            Connection conn = null;
+            CallableStatement cst = null;
+            if (GrantOption.compareTo("Yes") == 0)
+                GrantOption = "WITH GRANT OPTION";
+            if (GrantOption.compareTo("No") == 0)
+                GrantOption = " ";
+            if (GrantOption.compareTo("Option") == 0)
+                GrantOption = " ";
+            System.out.println(GrantOption);
+            System.out.println(tableName);
+            System.out.println(userName);
+            System.out.println(columnName);
+            try {
+                dal = DataAccessLayer.getInstance("", "");
+                conn = dal.connect();
+                // pst = conn.prepareStatement(String.format("CREATE USER %s IDENTIFIED BY %s",
+                // username, password));
+                if (selectedPrivilege.compareTo("Select") == 0) {
+                    System.out.println("GG");
+                    cst = conn.prepareCall("{CALL SP_GRANT_SELECT_PRIV(?,?,?,?)}");
+                    cst.setString(1, userName);
+                    cst.setString(2, tableName);
+                    cst.setString(3, columnName);
+                    cst.setString(4, GrantOption);
+                }
+                if (selectedPrivilege.compareTo("Update") == 0) {
+                    System.out.println("GG");
+                    cst = conn.prepareCall("{CALL SP_GRANT_UPDATE_PRIV(?,?,?,?)}");
+                    cst.setString(1, userName);
+                    cst.setString(2, tableName);
+                    cst.setString(3, columnName);
+                    cst.setString(4, GrantOption);
+                }
+                
+                if (selectedPrivilege.compareTo("Insert") == 0) {
+                    System.out.println("GG");
+                    cst = conn.prepareCall("{CALL SP_GRANT_INSERT_PRIV(?,?,?)}");
+                    cst.setString(1, userName);
+                    cst.setString(2, tableName);
+                    cst.setString(3, GrantOption);
+                }
+                
+                if (selectedPrivilege.compareTo("Delete") == 0) {
+                    System.out.println("GG");
+                    cst = conn.prepareCall("{CALL SP_GRANT_DELETE_PRIV(?,?,?)}");
+                    cst.setString(1, userName);
+                    cst.setString(2, tableName);
+                    cst.setString(3, GrantOption);
+                }
+                // Set parameters for the stored procedure
+
+                System.out.println(userName);
+                System.out.println(selectedPrivilege);
+                System.out.println(tableName);
+                // Execute the stored procedure
+                System.out.println("nhan beo 1 ROLE");
+                cst.execute();
+                /// pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY
+                /// Rack123456");
+                System.out.println("nhan beo 2 ROLE");
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Priv grant from user successfully.");
+                // Clear the input fields after successful insertion
+                ADDRoleField.clear();
+                // Refresh the TableView to reflect the changes
+                loadRolesFromDatabase();
+            } catch (SQLException e) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to grant privilege: " + e.getMessage());
+                System.out.println(e.getMessage());
+            }
+        
+    }
+    @FXML
+    public void menuItemClickedGrantPrivBoo1(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String selectedPrivilege = menuItem.getText();
+        WithGrantOptUser1.setText(selectedPrivilege);
+    }
+
+    @FXML
+    public void menuItemClickedGrantPriv1(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String selectedPrivilege = menuItem.getText();
+        SelectPrivGrant1.setText(selectedPrivilege);
+    }
+
+    @FXML
+    private void ButtonAOKgrnantPrivOnClick1(ActionEvent event) {
+        String tableName = TableNamePrivField1.getText().trim();
+        String columnName = TableNamePrivField11.getText().trim();
+
+        // Validate the input fields
+        if (tableName.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please enter table name :<");
+            return;
+        }
+
+        Role selectedRole = roleTableView.getSelectionModel().getSelectedItem();
+        String selectedPrivilege = SelectPrivGrant1.getText();
+        String GrantOption = WithGrantOptUser1.getText();
+        System.out.println(selectedPrivilege);
+        if (selectedPrivilege == "Privilege") {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please choose privilege type");
+            return;
+        }
+        // Check if a row is selected
+        if (selectedRole != null) {
+            // Retrieve data from the first column of the selected row
+            String userName = selectedRole.getROLE();
+
+            // Insert the new user into the database
+            DataAccessLayer dal = null;
+            Connection conn = null;
+            CallableStatement cst = null;
+            if (GrantOption.compareTo("Yes") == 0)
+                GrantOption = "WITH GRANT OPTION";
+            if (GrantOption.compareTo("No") == 0)
+                GrantOption = " ";
+            if (GrantOption.compareTo("Option") == 0)
+                GrantOption = " ";
+            System.out.println(GrantOption);
+            System.out.println(tableName);
+            System.out.println(userName);
+            System.out.println(columnName);
+            try {
+                dal = DataAccessLayer.getInstance("", "");
+                conn = dal.connect();
+                // pst = conn.prepareStatement(String.format("CREATE USER %s IDENTIFIED BY %s",
+                // username, password));
+                if (selectedPrivilege.compareTo("Select") == 0) {
+                    System.out.println("GG");
+                    cst = conn.prepareCall("{CALL SP_GRANT_SELECT_PRIV(?,?,?,?)}");
+                    cst.setString(1, userName);
+                    cst.setString(2, tableName);
+                    cst.setString(3, columnName);
+                    cst.setString(4, GrantOption);
+                }
+                if (selectedPrivilege.compareTo("Update") == 0) {
+                    System.out.println("GG");
+                    cst = conn.prepareCall("{CALL SP_GRANT_UPDATE_PRIV(?,?,?,?)}");
+                    cst.setString(1, userName);
+                    cst.setString(2, tableName);
+                    cst.setString(3, columnName);
+                    cst.setString(4, GrantOption);
+                }
+                
+                if (selectedPrivilege.compareTo("Insert") == 0) {
+                    System.out.println("GG");
+                    cst = conn.prepareCall("{CALL SP_GRANT_INSERT_PRIV(?,?,?)}");
+                    cst.setString(1, userName);
+                    cst.setString(2, tableName);
+                    cst.setString(3, GrantOption);
+                }
+                
+                if (selectedPrivilege.compareTo("Delete") == 0) {
+                    System.out.println("GG");
+                    cst = conn.prepareCall("{CALL SP_GRANT_DELETE_PRIV(?,?,?)}");
+                    cst.setString(1, userName);
+                    cst.setString(2, tableName);
+                    cst.setString(3, GrantOption);
+                }
+                // Set parameters for the stored procedure
+
+                System.out.println(userName);
+                System.out.println(selectedPrivilege);
+                System.out.println(tableName);
+                // Execute the stored procedure
+                System.out.println("nhan beo 1 ROLE");
+                cst.execute();
+                /// pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY
+                /// Rack123456");
+                System.out.println("nhan beo 2 ROLE");
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Priv grant to role successfully.");
+                // Clear the input fields after successful insertion
+                ADDRoleField.clear();
+                // Refresh the TableView to reflect the changes
+                loadRolesFromDatabase();
+            } catch (SQLException e) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to grnat privilege: " + e.getMessage());
                 System.out.println(e.getMessage());
             }
         }

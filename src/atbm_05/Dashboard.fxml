@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SplitMenuButton?>
@@ -70,9 +71,9 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TextField fx:id="GrantRoleTextField" layoutX="343.0" layoutY="144.0" promptText="Role Name..." />
-                  <Button fx:id="GrantRoleBTNOK" layoutX="496.0" layoutY="163.0" mnemonicParsing="false" onAction="#GrantRoleBTNOKOnClick" text="OK" />
-                  <Label fx:id="GrantTextLabel" layoutX="309.0" layoutY="146.0" text="Grant" />
+                  <TextField fx:id="GrantRoleTextField" layoutX="343.0" layoutY="144.0" promptText="Role Name..." visible="false" />
+                  <Button fx:id="GrantRoleBTNOK" layoutX="496.0" layoutY="163.0" mnemonicParsing="false" onAction="#GrantRoleBTNOKOnClick" text="OK" visible="false" />
+                  <Label fx:id="GrantTextLabel" layoutX="309.0" layoutY="146.0" text="Grant" visible="false" />
                   <Button fx:id="revokePrivfromRoleBTN" layoutX="482.0" layoutY="79.0" mnemonicParsing="false" onAction="#revokePrivfromRoleBTNOnclick" prefHeight="33.0" prefWidth="60.0" text="Revoke">
                      <font>
                         <Font name="System Bold" size="12.0" />
@@ -88,8 +89,27 @@
                   </SplitMenuButton>
                   <TextField fx:id="RevoketableField" layoutX="121.0" layoutY="153.0" promptText="Table Name..." visible="false" />
                   <Button fx:id="RevoketableOK" layoutX="278.0" layoutY="153.0" mnemonicParsing="false" onAction="#RevoketableOKOnClick" text="OK" visible="false" />
-                  <TextField fx:id="GrantPrivtoUserField" layoutX="343.0" layoutY="180.0" promptText="User Name..." />
-                  <Label fx:id="ToText" layoutX="317.0" layoutY="184.0" text="To" />
+                  <TextField fx:id="GrantPrivtoUserField" layoutX="343.0" layoutY="180.0" promptText="User Name..." visible="false" />
+                  <Label fx:id="ToText" layoutX="317.0" layoutY="184.0" text="To" visible="false" />
+                  <MenuButton fx:id="SelectPrivGrant" layoutX="29.0" layoutY="144.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Privilege" visible="false">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPriv" text="Select" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPriv" text="Update" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPriv" text="Insert" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPriv" text="Delete" />
+                    </items>
+                  </MenuButton>
+                  <TextField fx:id="TableNamePrivField" layoutX="121.0" layoutY="144.0" promptText="Table Name" visible="false"/>
+                  <Button fx:id="ButtonAOKgrnantPriv" layoutX="278.0" layoutY="153.0" mnemonicParsing="false" onAction="#ButtonAOKgrnantPrivOnClick" text="OK" visible="false"/>
+                  <MenuButton fx:id="WithGrantOptUser" layoutX="29.0" layoutY="176.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Option" visible="false">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPrivBoo" text="Yes" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPrivBoo" text="No" />
+                       
+                     
+                     </items>
+                  </MenuButton>
+                  <TextField fx:id="TableNamePrivField1" layoutX="121.0" layoutY="176.0" promptText="Column Name" visible="false"/>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -129,7 +149,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <SplitMenuButton fx:id="PrivSelectRevokeRole" contentDisplay="TOP" layoutX="31.0" layoutY="157.0" mnemonicParsing="false" text="Privilege">
+                  <SplitMenuButton fx:id="PrivSelectRevokeRole" contentDisplay="TOP" layoutX="31.0" layoutY="157.0" mnemonicParsing="false" text="Privilege" visible="false">  
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#menuItemClickedRole" text="Select" />
                         <MenuItem mnemonicParsing="false" onAction="#menuItemClickedRole" text="Update" />
@@ -137,8 +157,31 @@
                         <MenuItem mnemonicParsing="false" onAction="#menuItemClickedRole" text="Delete" />
                      </items>
                   </SplitMenuButton>
-                  <TextField fx:id="RevoketableFieldRole" layoutX="124.0" layoutY="157.0" promptText="Table Name..." />
-                  <Button fx:id="RevoketableOKRole" layoutX="281.0" layoutY="157.0" mnemonicParsing="false" onAction="#RevoketableOKOnClickRole" text="OK" />
+                  <TextField fx:id="RevoketableFieldRole" layoutX="124.0" layoutY="157.0" promptText="Table Name..." visible="false"/>
+                  <Button fx:id="RevoketableOKRole" layoutX="281.0" layoutY="157.0" mnemonicParsing="false" onAction="#RevoketableOKOnClickRole" text="OK" visible="false"/>
+                  <Button fx:id="GrantPrivBtn1" layoutX="349.0" layoutY="85.0" mnemonicParsing="false" onAction="#GrantPrivBtnOnClick1" prefHeight="33.0" prefWidth="77.0" text="Grant Priv">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <MenuButton fx:id="SelectPrivGrant1" layoutX="257.0" layoutY="141.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Privilege" visible="false">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPriv1" text="Select" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPriv1" text="Update" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPriv1" text="Insert" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPriv1" text="Delete" />
+                     </items>
+                  </MenuButton>
+                  <TextField fx:id="TableNamePrivField2" layoutX="349.0" layoutY="141.0" promptText="Table Name" visible="false"/>
+                  <Button fx:id="ButtonAOKgrnantPriv1" layoutX="506.0" layoutY="150.0" mnemonicParsing="false" onAction="#ButtonAOKgrnantPrivOnClick" text="OK" visible="false"/>
+                  <MenuButton fx:id="WithGrantOptUser1" layoutX="257.0" layoutY="173.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Option" visible="false">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPrivBoo1" text="Yes" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedGrantPrivBoo1" text="No" />
+                     </items>
+                  </MenuButton>
+                  <TextField fx:id="TableNamePrivField11" layoutX="349.0" layoutY="173.0" promptText="Column Name" visible="false"/>
+                  <TextField fx:id="RoleName" layoutX="98.0" layoutY="157.0" promptText="Role Name" visible="false"/>
                </children>
             </AnchorPane>
         </items>
