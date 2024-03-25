@@ -131,7 +131,7 @@ public class DashboardController {
         privilegeColumn.setCellValueFactory(cellData -> cellData.getValue().PRIVILEGEproperty());
         grantableColumn.setCellValueFactory(cellData -> cellData.getValue().GRANTABLEproperty());
         searchRoleField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filterRoles(newValue);
+            searchRoles(newValue);
         });
         roleList = FXCollections.observableArrayList(); 
 
@@ -139,28 +139,6 @@ public class DashboardController {
         // Load users from database
         loadUsersFromDatabase();
 
-    }
-    //search roles
-    private void filterRoles(String searchText) {
-        // Create a filtered list to hold the filtered roles
-        FilteredList<Role> filteredList = new FilteredList<>(roleList, role -> true);
-        
-        // Apply the filter based on the search text
-        filteredList.setPredicate(role -> {
-            // If search text is empty, display all roles
-            if (searchText == null || searchText.isEmpty()) {
-                return true;
-            }
-            
-            // Convert search text to lowercase for case-insensitive search
-            String lowerCaseSearchText = searchText.toLowerCase();
-            
-            // Check if the role name contains the search text
-            return role.getROLE().toLowerCase().contains(lowerCaseSearchText);
-        });
-        
-        // Set the filtered list as the items for the TableView
-        roleTableView.setItems(filteredList);
     }
 
     @FXML
@@ -361,7 +339,6 @@ public class DashboardController {
                     showAlert(Alert.AlertType.INFORMATION, "Success", "Role deleted successfully.");
                     loadRolesFromDatabase();
                     roleTableView.refresh();
-                    reloadWindow(); // force reload
                 } catch (SQLException e) {
                     showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete role: " + e.getMessage());
                     System.out.println(e.getMessage());
@@ -377,52 +354,38 @@ public class DashboardController {
             alert.showAndWait();
         }
     }
+    @FXML
+    private void onSearchRoleButtonClick(ActionEvent event) {
+        // Retrieve the search query from the search field
+        String searchText = searchRoleField.getText().trim();
 
-    private void reloadWindow() {
-        // Get the current stage (window)
-        Stage stage = (Stage) roleTableView.getScene().getWindow();
-
-        // Close the window
-        stage.close();
-
-        // Reopen the window
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
-        Parent root;
-        try {
-            root = loader.load();
-            Stage newStage = new Stage();
-            newStage.setScene(new Scene(root));
-            newStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Call the method to search roles
+        searchRoles(searchText);
     }
 
+
+
     private void searchRoles(String searchText) {
-        // Create a filtered list to hold the filtered roles
-        System.out.println("nhan beo 1 ROLE");
         DataAccessLayer dal = null;
         Connection conn = null;
-        CallableStatement cst = null;
+        PreparedStatement pst = null;
         ResultSet rs = null;
-
+    
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
 
-            // Prepare the SQL query with placeholders for parameters
-            String sql = "SELECT * FROM role_tab_privs WHERE owner = 'C##QLK' AND role LIKE ?";
-            cst = conn.prepareCall(sql);
-
+            pst = conn.prepareStatement("SELECT * FROM role_tab_privs WHERE owner = 'C##QLK' AND role LIKE ?");
+    
             // Set the search parameter
-            cst.setString(1, "%" + searchText + "%");
-
+            pst.setString(1, "%" + searchText + "%");
+            System.out.println("nhan beo 1");
             // Execute the query
-            rs = cst.executeQuery();
-
+            rs = pst.executeQuery();
+            System.out.println("nhan beo 2");
             // Create a list to hold the roles
             List<Role> roleList = new ArrayList<>();
-
+    
             // Iterate over the result set
             while (rs.next()) {
                 Role role = new Role();
@@ -432,20 +395,20 @@ public class DashboardController {
                 role.setCOLUMN_NAME(rs.getString("COLUMN_NAME"));
                 role.setPRIVILEGE(rs.getString("PRIVILEGE"));
                 role.setGRANTABLE(rs.getString("GRANTABLE"));
-
+    
                 // Add the role to the list
                 roleList.add(role);
             }
-
-            // Assuming you have a method to update the TableView with the new roleList
-
+    
+            // Set the loaded roles to the table view
+            roleTableView.setItems(FXCollections.observableArrayList(roleList));
+    
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load roles from the database.");
             System.out.println(e.getMessage());
         }
-        // Set the loaded users to the table view
-        roleTableView.setItems(roleList);
     }
+    
 
     private void loadUsersFromDatabase() {
         DataAccessLayer dal = null;

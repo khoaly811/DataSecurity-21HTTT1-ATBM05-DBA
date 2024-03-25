@@ -1,7 +1,5 @@
 package dto;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import java.time.LocalDate;
 
 public class Role {
     private final SimpleStringProperty ROLE = new SimpleStringProperty();
