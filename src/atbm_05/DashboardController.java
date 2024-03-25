@@ -1100,8 +1100,9 @@ public class DashboardController {
             showAlert(Alert.AlertType.ERROR, "Error", "Please enter table name :<");
             return;
         }
-        String userName = RoleName.getText().trim();
+        
         User selectedUser = userTableView.getSelectionModel().getSelectedItem();
+        String userName = selectedUser.getUSERNAME();
         String selectedPrivilege = SelectPrivGrant.getText();
         String GrantOption = WithGrantOptUser.getText();
         System.out.println(selectedPrivilege);
@@ -1166,7 +1167,8 @@ public class DashboardController {
                     cst.setString(3, GrantOption);
                 }
                 // Set parameters for the stored procedure
-
+                System.out.println(selectedUser);
+                
                 System.out.println(userName);
                 System.out.println(selectedPrivilege);
                 System.out.println(tableName);
