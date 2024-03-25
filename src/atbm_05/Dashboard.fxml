@@ -78,7 +78,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <SplitMenuButton fx:id="PrivSelectRevoke" contentDisplay="TOP" layoutX="28.0" layoutY="153.0" mnemonicParsing="false" text="Privilege">
+                  <SplitMenuButton fx:id="PrivSelectRevoke" contentDisplay="TOP" layoutX="28.0" layoutY="153.0" mnemonicParsing="false" text="Privilege" visible="false">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#menuItemClicked" text="Select" />
                       <MenuItem mnemonicParsing="false" onAction="#menuItemClicked" text="Update" />
@@ -86,8 +86,8 @@
                         <MenuItem mnemonicParsing="false" onAction="#menuItemClicked" text="Delete" />
                     </items>
                   </SplitMenuButton>
-                  <TextField fx:id="RevoketableField" layoutX="121.0" layoutY="153.0" promptText="Table Name..." />
-                  <Button fx:id="RevoketableOK" layoutX="278.0" layoutY="153.0" mnemonicParsing="false" onAction="#RevoketableOKOnClick" text="OK" />
+                  <TextField fx:id="RevoketableField" layoutX="121.0" layoutY="153.0" promptText="Table Name..." visible="false"/>
+                  <Button fx:id="RevoketableOK" layoutX="278.0" layoutY="153.0" mnemonicParsing="false" onAction="#RevoketableOKOnClick" text="OK" visible="false"/>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -122,6 +122,21 @@
                   <Label fx:id="ADDroleText" layoutX="20.0" layoutY="161.0" text="Adding role" visible="false" />
                   <TextField fx:id="ADDRoleField" layoutX="98.0" layoutY="157.0" promptText="Name...." visible="false" />
                   <Button fx:id="ADDRoleBtn" layoutX="255.0" layoutY="157.0" mnemonicParsing="false" onAction="#onAddOKRoleButtonClick" text="OK" visible="false" />
+                  <Button fx:id="revokePrivfromRoleBTN1" layoutX="272.0" layoutY="85.0" mnemonicParsing="false" onAction="#revokePrivfromRoleBTNOnclick1" prefHeight="33.0" prefWidth="60.0" text="Revoke">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <SplitMenuButton fx:id="PrivSelectRevokeRole" contentDisplay="TOP" layoutX="31.0" layoutY="157.0" mnemonicParsing="false" text="Privilege">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedRole" text="Select" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedRole" text="Update" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedRole" text="Insert" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuItemClickedRole" text="Delete" />
+                     </items>
+                  </SplitMenuButton>
+                  <TextField fx:id="RevoketableFieldRole" layoutX="124.0" layoutY="157.0" promptText="Table Name..." />
+                  <Button fx:id="RevoketableOKRole" layoutX="281.0" layoutY="157.0" mnemonicParsing="false" onAction="#RevoketableOKOnClickRole" text="OK" />
                </children>
             </AnchorPane>
         </items>
