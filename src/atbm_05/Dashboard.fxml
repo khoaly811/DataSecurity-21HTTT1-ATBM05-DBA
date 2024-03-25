@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -56,6 +57,20 @@
                   <TextField fx:id="updateUsernameTextField" layoutX="115.0" layoutY="135.0" visible="false" />
                   <PasswordField fx:id="updatePasswordTextField" layoutX="115.0" layoutY="171.0" visible="false" />
                   <Button fx:id="UpdateUserPassBtnExe" layoutX="276.0" layoutY="138.0" mnemonicParsing="false" onAction="#onUpdatePasswordButtonClick" text="Update" visible="false" />
+                  <Button fx:id="GrantRoleBtn" layoutX="392.0" layoutY="57.0" mnemonicParsing="false" onAction="#GrantRoleBtnOnClick" prefHeight="33.0" prefWidth="77.0" text="Grant Role">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Line endX="27.0" endY="-71.0" layoutX="350.0" layoutY="130.0" startX="27.0" startY="2.0" />
+                  <Button fx:id="GrantPrivBtn" layoutX="392.0" layoutY="102.0" mnemonicParsing="false" onAction="#GrantPrivBtnOnClick" prefHeight="33.0" prefWidth="77.0" text="Grant Priv">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="GrantRoleTextField" layoutX="343.0" layoutY="163.0" promptText="Role Name..." />
+                  <Button fx:id="GrantRoleBTNOK" layoutX="492.0" layoutY="163.0" mnemonicParsing="false" onAction="#GrantRoleBTNOKOnClick" text="OK" />
+                  <Label fx:id="GrantTextLabel" layoutX="309.0" layoutY="165.0" text="Grant" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

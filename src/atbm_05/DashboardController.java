@@ -116,7 +116,6 @@ public class DashboardController {
     @FXML
     private Label ADDroleText;
 
-
     @FXML
     private Label UpdateUserPassUserName;
 
@@ -128,6 +127,21 @@ public class DashboardController {
 
     @FXML
     private TextField searchUserField;
+
+    @FXML
+    private Button GrantRoleBtn;
+
+    @FXML
+    private Button GrantPrivBtnOnClick;
+
+    @FXML
+    private Button GrantRoleBTNOK;
+
+    @FXML
+    private TextField GrantRoleTextField;
+
+    @FXML
+    private Label GrantTextLabel;
 
     @FXML
     public void initialize() {
@@ -149,7 +163,7 @@ public class DashboardController {
         searchUserField.textProperty().addListener((observable, oldValue, newValue) -> {
             searchUsers(newValue);
         });
-        roleList = FXCollections.observableArrayList(); 
+        roleList = FXCollections.observableArrayList();
 
         loadRolesFromDatabase();
         // Load users from database
@@ -160,30 +174,30 @@ public class DashboardController {
     @FXML
     private void onAddUserButtonClick(ActionEvent event) {
         if (!userUsernameUpdateLabel.isVisible()) {
-        userUsernameUpdateLabel.setVisible(true);
-        userPasswordUpdateLabel.setVisible(true);
-        userUsernameUpdateTextField.setVisible(true);
-        userPasswordUpdateTextField.setVisible(true);
-        addOK.setVisible(true);
+            userUsernameUpdateLabel.setVisible(true);
+            userPasswordUpdateLabel.setVisible(true);
+            userUsernameUpdateTextField.setVisible(true);
+            userPasswordUpdateTextField.setVisible(true);
+            addOK.setVisible(true);
 
-        userUsernameUpdateLabel.setDisable(false);
-        userPasswordUpdateLabel.setDisable(false);
-        userUsernameUpdateTextField.setDisable(false);
-        userPasswordUpdateTextField.setDisable(false);
-        addOK.setDisable(false);
-        }else{
+            userUsernameUpdateLabel.setDisable(false);
+            userPasswordUpdateLabel.setDisable(false);
+            userUsernameUpdateTextField.setDisable(false);
+            userPasswordUpdateTextField.setDisable(false);
+            addOK.setDisable(false);
+        } else {
 
-        userUsernameUpdateLabel.setVisible(false);
-        userPasswordUpdateLabel.setVisible(false);
-        userUsernameUpdateTextField.setVisible(false);
-        userPasswordUpdateTextField.setVisible(false);
-        addOK.setVisible(false);
+            userUsernameUpdateLabel.setVisible(false);
+            userPasswordUpdateLabel.setVisible(false);
+            userUsernameUpdateTextField.setVisible(false);
+            userPasswordUpdateTextField.setVisible(false);
+            addOK.setVisible(false);
 
-        userUsernameUpdateLabel.setDisable(true);
-        userPasswordUpdateLabel.setDisable(true);
-        userUsernameUpdateTextField.setDisable(true);
-        userPasswordUpdateTextField.setDisable(true);
-        addOK.setDisable(true);
+            userUsernameUpdateLabel.setDisable(true);
+            userPasswordUpdateLabel.setDisable(true);
+            userUsernameUpdateTextField.setDisable(true);
+            userPasswordUpdateTextField.setDisable(true);
+            addOK.setDisable(true);
         }
     }
 
@@ -375,7 +389,6 @@ public class DashboardController {
             alert.showAndWait();
         }
     }
-   
 
     @FXML
     private void onAddOKRoleButtonClick(ActionEvent event) {
@@ -467,6 +480,7 @@ public class DashboardController {
             alert.showAndWait();
         }
     }
+
     @FXML
     private void onSearchRoleButtonClick(ActionEvent event) {
         // Retrieve the search query from the search field
@@ -476,20 +490,18 @@ public class DashboardController {
         searchRoles(searchText);
     }
 
-
-
     private void searchRoles(String searchText) {
         DataAccessLayer dal = null;
         Connection conn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-    
+
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
 
             pst = conn.prepareStatement("SELECT * FROM role_tab_privs WHERE owner = 'C##QLK' AND role LIKE ?");
-    
+
             // Set the search parameter
             pst.setString(1, "%" + searchText + "%");
             System.out.println("nhan beo 1");
@@ -498,7 +510,7 @@ public class DashboardController {
             System.out.println("nhan beo 2");
             // Create a list to hold the roles
             List<Role> roleList = new ArrayList<>();
-    
+
             // Iterate over the result set
             while (rs.next()) {
                 Role role = new Role();
@@ -508,14 +520,14 @@ public class DashboardController {
                 role.setCOLUMN_NAME(rs.getString("COLUMN_NAME"));
                 role.setPRIVILEGE(rs.getString("PRIVILEGE"));
                 role.setGRANTABLE(rs.getString("GRANTABLE"));
-    
+
                 // Add the role to the list
                 roleList.add(role);
             }
-    
+
             // Set the loaded roles to the table view
             roleTableView.setItems(FXCollections.observableArrayList(roleList));
-    
+
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load roles from the database.");
             System.out.println(e.getMessage());
@@ -533,8 +545,9 @@ public class DashboardController {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
 
-            pst = conn.prepareStatement("SELECT * FROM dba_users  join dba_role_privs on dba_users.username = dba_role_privs.grantee WHERE (username LIKE 'NV%' OR USERNAME LIKE 'SV%') AND USERNAME LIKE ?");
-    
+            pst = conn.prepareStatement(
+                    "SELECT * FROM dba_users  join dba_role_privs on dba_users.username = dba_role_privs.grantee WHERE (username LIKE 'NV%' OR USERNAME LIKE 'SV%') AND USERNAME LIKE ?");
+
             // Set the search parameter
             pst.setString(1, "%" + searchText + "%");
             System.out.println("nhan beo 1");
@@ -545,7 +558,7 @@ public class DashboardController {
             System.out.println("nhan beo 2");
             // Create a list to hold the users
             List<User> userList = new ArrayList<>();
-    
+
             // Iterate over the result set
             while (rs.next()) {
                 User user = new User();
@@ -558,22 +571,19 @@ public class DashboardController {
                     user.setLAST_LOGIN(rs.getDate("LAST_LOGIN").toLocalDate());
                 }
                 user.setGRANTED_ROLE(rs.getString("GRANTED_ROLE"));
-    
+
                 // Add the role to the list
                 userList.add(user);
             }
-    
+
             // Set the loaded roles to the table view
             userTableView.setItems(FXCollections.observableArrayList(userList));
-    
+
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load users from the database.");
             System.out.println(e.getMessage());
         }
     }
-
-    
-    
 
     private void loadUsersFromDatabase() {
         DataAccessLayer dal = null;
@@ -671,6 +681,87 @@ public class DashboardController {
             newStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void GrantRoleBtnOnClick(ActionEvent event) {
+        if (!GrantTextLabel.isVisible()) {
+            GrantTextLabel.setVisible(true);
+            GrantRoleBTNOK.setVisible(true);
+            GrantRoleTextField.setVisible(true);
+
+            GrantTextLabel.setDisable(false);
+            GrantRoleBTNOK.setDisable(false);
+            GrantRoleTextField.setDisable(false);
+
+        } else {
+
+            GrantTextLabel.setVisible(false);
+            GrantRoleBTNOK.setVisible(false);
+            GrantRoleTextField.setVisible(false);
+
+            GrantTextLabel.setDisable(true);
+            GrantRoleBTNOK.setDisable(true);
+            GrantRoleTextField.setDisable(true);
+        }
+    }
+
+    @FXML
+    private void GrantPrivBtnOnClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void GrantRoleBTNOKOnClick(ActionEvent event) {
+        // username la ten role :)))))
+        String rolename = GrantRoleTextField.getText().trim();
+
+        if (rolename.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please enter role name :<");
+            return;
+        }
+
+        User selectedUser = userTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedUser != null) {
+            String userName = selectedUser.getUSERNAME();
+
+            System.out.println("User Name to add Role to: " + userName);
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to add role " + rolename + " to user " + userName + " ?");
+
+            // Insert the new user into the database
+            DataAccessLayer dal = null;
+            Connection conn = null;
+            CallableStatement cst = null;
+
+            try {
+                dal = DataAccessLayer.getInstance("", "");
+                conn = dal.connect();
+
+                cst = conn.prepareCall("{CALL SP_GRANT_ROLE_USER(?,?)}");
+                // Set parameters for the stored procedure
+                cst.setString(1, userName);
+                cst.setString(2, rolename);
+                // Execute the stored procedure
+                System.out.println("nhan beo 1 ROLE");
+                cst.execute();
+                /// pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY
+                /// Rack123456");
+                System.out.println("nhan beo 2 ROLE");
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Role added to user successfully.");
+                // Clear the input fields after successful insertion
+                ADDRoleField.clear();
+                // Refresh the TableView to reflect the changes
+                loadRolesFromDatabase();
+            } catch (SQLException e) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to add role: " + e.getMessage());
+                System.out.println(e.getMessage());
+            }
         }
     }
 
