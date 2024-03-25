@@ -116,8 +116,6 @@ public class DashboardController {
     @FXML
     private Label ADDroleText;
 
-    @FXML
-    private Label UpdateUserPassText;
 
     @FXML
     private Label UpdateUserPassUserName;
@@ -127,6 +125,9 @@ public class DashboardController {
 
     @FXML
     private Button UpdateUserPassBtnExe;
+
+    @FXML
+    private TextField searchUserField;
 
     @FXML
     public void initialize() {
@@ -144,6 +145,9 @@ public class DashboardController {
         grantableColumn.setCellValueFactory(cellData -> cellData.getValue().GRANTABLEproperty());
         searchRoleField.textProperty().addListener((observable, oldValue, newValue) -> {
             searchRoles(newValue);
+        });
+        searchUserField.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchUsers(newValue);
         });
         roleList = FXCollections.observableArrayList(); 
 
@@ -281,14 +285,12 @@ public class DashboardController {
     private void onUpdateUserButtonClick(ActionEvent event) {
         if (!UpdateUserPassPass.isVisible()) {
             // If all elements are currently not visible, make them visible
-            UpdateUserPassText.setVisible(true);
             UpdateUserPassUserName.setVisible(true);
             UpdateUserPassPass.setVisible(true);
             updateUsernameTextField.setVisible(true);
             updatePasswordTextField.setVisible(true);
             UpdateUserPassBtnExe.setVisible(true);
             System.out.println("GGGG"); // Print when elements become visible
-            UpdateUserPassText.setDisable(false);
             UpdateUserPassUserName.setDisable(false);
             UpdateUserPassPass.setDisable(false);
             updateUsernameTextField.setDisable(false);
@@ -296,14 +298,12 @@ public class DashboardController {
             UpdateUserPassBtnExe.setDisable(false);
         } else {
             // If any one of the elements is currently visible, make them all invisible
-            UpdateUserPassText.setVisible(false);
             UpdateUserPassUserName.setVisible(false);
             UpdateUserPassPass.setVisible(false);
             updateUsernameTextField.setVisible(false);
             updatePasswordTextField.setVisible(false);
             UpdateUserPassBtnExe.setVisible(false);
             System.out.println("GGGG"); // Print when elements become invisible
-            UpdateUserPassText.setDisable(true);
             UpdateUserPassUserName.setDisable(true);
             UpdateUserPassPass.setDisable(true);
             updateUsernameTextField.setDisable(true);
@@ -311,6 +311,55 @@ public class DashboardController {
             UpdateUserPassBtnExe.setDisable(true);
         }
     }
+
+    @FXML
+    private void onDeleteButtonClickRowUser(ActionEvent event) {
+        // Get the selected row
+        User selectedUser = userTableView.getSelectionModel().getSelectedItem();
+
+        // Check if a row is selected
+        if (selectedUser != null) {
+            // Retrieve data from the first column of the selected row
+            String userName = selectedUser.getUSERNAME();
+
+            System.out.println("User Name to delete: " + userName);
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete user " + userName + " ?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                DataAccessLayer dal = null;
+                Connection conn = null;
+                CallableStatement cst = null;
+
+                try {
+                    dal = DataAccessLayer.getInstance("", "");
+                    conn = dal.connect();
+                    cst = conn.prepareCall("{CALL SP_DROP_USER(?)}");
+                    cst.setString(1, userName);
+                    cst.execute();
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "User deleted successfully.");
+                    loadUsersFromDatabase();
+                    userTableView.refresh();
+                } catch (SQLException e) {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete user: " + e.getMessage());
+                    System.out.println(e.getMessage());
+                }
+            }
+
+        } else {
+            // If no row is selected, show an alert
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a row to delete.");
+            alert.showAndWait();
+        }
+    }
+   
 
     @FXML
     private void onAddOKRoleButtonClick(ActionEvent event) {
@@ -455,6 +504,58 @@ public class DashboardController {
             System.out.println(e.getMessage());
         }
     }
+
+    private void searchUsers(String searchText) {
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        System.out.println(searchText);
+
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+
+            pst = conn.prepareStatement("select * from dba_users where (username like 'NV%' or username like 'SV%') and username LIKE ?");
+    
+            // Set the search parameter
+            pst.setString(1, "%" + searchText + "%");
+            System.out.println("nhan beo 1");
+            // Execute the query
+            rs = pst.executeQuery();
+            System.out.println(pst);
+            System.out.println(rs);
+            System.out.println("nhan beo 2");
+            // Create a list to hold the users
+            List<User> userList = new ArrayList<>();
+    
+            // Iterate over the result set
+            while (rs.next()) {
+                User user = new User();
+                user.setUSERNAME(rs.getString("USERNAME"));
+                user.setACCOUNT_STATUS((rs.getString("ACCOUNT_STATUS")));
+                user.setCREATED(rs.getDate("CREATED").toLocalDate());
+                if (rs.getDate("LAST_LOGIN") == null) {
+                    user.setLAST_LOGIN(null);
+                } else {
+                    user.setLAST_LOGIN(rs.getDate("LAST_LOGIN").toLocalDate());
+                }
+                user.setGRANTED_ROLE(rs.getString("GRANTED_ROLE"));
+    
+                // Add the role to the list
+                userList.add(user);
+            }
+    
+            // Set the loaded roles to the table view
+            userTableView.setItems(FXCollections.observableArrayList(userList));
+    
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load users from the database.");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    
     
 
     private void loadUsersFromDatabase() {
