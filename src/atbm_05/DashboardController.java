@@ -9,7 +9,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -144,6 +146,18 @@ public class DashboardController {
     private Label GrantTextLabel;
 
     @FXML
+    private Button revokePrivfromRoleBTN;
+
+    @FXML
+    private Button RevoketableOK;
+
+    @FXML
+    private TextField RevoketableField;
+
+    @FXML
+    private SplitMenuButton PrivSelectRevoke;
+
+    @FXML
     public void initialize() {
         // Initialize table columns
         usernameColumn.setCellValueFactory(cellData -> cellData.getValue().USERNAMEproperty());
@@ -168,6 +182,7 @@ public class DashboardController {
         loadRolesFromDatabase();
         // Load users from database
         loadUsersFromDatabase();
+        
 
     }
 
@@ -760,6 +775,94 @@ public class DashboardController {
                 loadRolesFromDatabase();
             } catch (SQLException e) {
                 showAlert(Alert.AlertType.ERROR, "Error", "Failed to add role: " + e.getMessage());
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    private void revokePrivfromRoleBTNOnclick(ActionEvent event) {
+        if (!PrivSelectRevoke.isVisible()) {
+            PrivSelectRevoke.setVisible(true);
+            RevoketableField.setVisible(true);
+            RevoketableOK.setVisible(true);
+
+            PrivSelectRevoke.setDisable(false);
+            RevoketableField.setDisable(false);
+            RevoketableOK.setDisable(false);
+
+        } else {
+
+            PrivSelectRevoke.setVisible(false);
+            RevoketableField.setVisible(false);
+            RevoketableOK.setVisible(false);
+
+            PrivSelectRevoke.setDisable(true);
+            RevoketableField.setDisable(true);
+            RevoketableOK.setDisable(true);
+        }
+    }
+    @FXML
+    public void menuItemClicked(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String selectedPrivilege = menuItem.getText();
+        PrivSelectRevoke.setText(selectedPrivilege);
+    }
+
+    @FXML
+    private void RevoketableOKOnClick(ActionEvent event) {
+        String tableName = RevoketableField.getText().trim();
+
+        // Validate the input fields
+        if (tableName.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please enter table name :<");
+            return;
+        }
+
+        User selectedUser = userTableView.getSelectionModel().getSelectedItem();
+        String selectedPrivilege = PrivSelectRevoke.getText();
+        System.out.println(selectedPrivilege);
+        if(selectedPrivilege == "Privilege")
+        {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please choose privilege type");
+            return; 
+        }
+        // Check if a row is selected
+        if (selectedUser != null) {
+            // Retrieve data from the first column of the selected row
+            String userName = selectedUser.getUSERNAME();
+
+            // Insert the new user into the database
+            DataAccessLayer dal = null;
+            Connection conn = null;
+            CallableStatement cst = null;
+
+            try {
+                dal = DataAccessLayer.getInstance("", "");
+                conn = dal.connect();
+                // pst = conn.prepareStatement(String.format("CREATE USER %s IDENTIFIED BY %s",
+                // username, password));
+                cst = conn.prepareCall("{CALL SP_REVOKE_PRIV(?,?,?)}");
+                // Set parameters for the stored procedure
+                cst.setString(1, userName);
+                cst.setString(2, selectedPrivilege);
+                cst.setString(3, tableName);
+                System.out.println(userName);
+                System.out.println(selectedPrivilege);
+                System.out.println(tableName);
+                // Execute the stored procedure
+                System.out.println("nhan beo 1 ROLE");
+                cst.execute();
+                /// pst = conn.prepareStatement("CREATE USERNAME MAPMINHBEO IDENTIFIED BY
+                /// Rack123456");
+                System.out.println("nhan beo 2 ROLE");
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Role added successfully.");
+                // Clear the input fields after successful insertion
+                ADDRoleField.clear();
+                // Refresh the TableView to reflect the changes
+                loadRolesFromDatabase();
+            } catch (SQLException e) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to revoke privilege: " + e.getMessage());
                 System.out.println(e.getMessage());
             }
         }
