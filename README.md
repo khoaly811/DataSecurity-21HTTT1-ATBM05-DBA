@@ -1,4 +1,6 @@
 # Faculty of Information Technology Management System
+## Project Overview
+This project aims to design and implement a comprehensive data management system for a faculty, utilizing various technologies such as PLSQL, Advanced PLSQL, JavaFX, and Object-Oriented Programming (OOP) principles. The project covers data security and database design with Oracle, PLSQL implementation, and Java application development.
 
 ## Getting Started
 
