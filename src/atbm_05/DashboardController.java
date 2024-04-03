@@ -17,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import oracle.jdbc.OracleTypes;
 import dto.User;
 import dto.Role;
 import DataAccessLayer.DataAccessLayer;
@@ -33,7 +34,6 @@ import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 
 public class DashboardController {
@@ -653,15 +653,17 @@ public class DashboardController {
     private void loadUsersFromDatabase() {
         DataAccessLayer dal = null;
         Connection conn = null;
-        PreparedStatement pst = null;
+        CallableStatement pst = null;
         ResultSet rs = null;
 
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            pst = conn.prepareStatement(
-                    "select * from dba_users join dba_role_privs on dba_users.username = dba_role_privs.grantee where (username like 'NV%' or username like 'SV%')");
-            rs = pst.executeQuery();
+            pst = conn.prepareCall(
+                    "{CALL GET_USERS_PROC(?)}");
+                    pst.registerOutParameter(1, OracleTypes.CURSOR);
+                    pst.execute();
+                    rs = (ResultSet) pst.getObject(1);
             while (rs.next()) {
                 User user = new User();
                 user.setUSERNAME(rs.getString("USERNAME"));
@@ -682,6 +684,7 @@ public class DashboardController {
 
                 userList.add(user);
             }
+            userTableView.setItems(userList);
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load users from the database.");
         } finally {
